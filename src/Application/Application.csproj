@@ -21,6 +21,9 @@
 
   <ItemGroup>
     <Folder Include="Common\Mappings\" />
+    <Folder Include="Doodle\" />
+    <Folder Include="Events\" />
+    <Folder Include="Quiz\" />
   </ItemGroup>
 
 </Project>

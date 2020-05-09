@@ -21,11 +21,11 @@ namespace CleanArchitecture.Application.TodoLists.Commands.UpdateTodoList
                 .MustAsync(BeUniqueTitle).WithMessage("The specified title already exists.");
         }
 
-        public async Task<bool> BeUniqueTitle(UpdateTodoListCommand model, string title, CancellationToken cancellationToken)
+        public Task<bool> BeUniqueTitle(UpdateTodoListCommand model, string title, CancellationToken cancellationToken)
         {
-            return await _context.TodoLists
+            return _context.TodoLists
                 .Where(l => l.Id != model.Id)
-                .AllAsync(l => l.Title != title);
+                .AllAsync(l => l.Title != title, cancellationToken: cancellationToken);
         }
     }
 }
