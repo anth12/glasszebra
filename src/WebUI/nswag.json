@@ -60,7 +60,7 @@
       "moduleName": "",
       "namespace": "",
       "typeScriptVersion": 2.7,
-      "template": "Angular",
+      "template": "Fetch",
       "promiseType": "Promise",
       "httpClass": "HttpClient",
       "withCredentials": false,
@@ -74,7 +74,7 @@
       "generateOptionalParameters": false,
       "exportTypes": true,
       "wrapDtoExceptions": false,
-      "exceptionClass": "SwaggerException",
+      "exceptionClass": "ApiException",
       "clientBaseClass": null,
       "wrapResponses": false,
       "wrapResponseMethods": [],
@@ -89,6 +89,7 @@
       "markOptionalProperties": true,
       "generateCloneMethod": false,
       "typeStyle": "Class",
+      "enumStyle": "Enum",
       "classTypes": [],
       "extendedClasses": [],
       "extensionCode": null,
@@ -110,7 +111,7 @@
       "enumNameGeneratorType": null,
       "serviceHost": null,
       "serviceSchemes": null,
-      "output": "ClientApp/src/app/CleanArchitecture-api.ts"
+      "output": "ClientApp/src/client/api.ts"
     }
   }
 }
