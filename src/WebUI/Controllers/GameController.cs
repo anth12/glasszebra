@@ -43,12 +43,14 @@ namespace CleanArchitecture.WebUI.Controllers
             return NoContent();
         }
 
-        [HttpPut]
+        [HttpDelete]
         public async Task<ActionResult> LeaveGame(UpdateParticipantStatusCommand command)
         {
 	        await Mediator.Send(new UpdateParticipantStatusCommand
 	        {
-                NewStatus = ParticipantStatus.Left
+                NewStatus = ParticipantStatus.Left,
+                GameClientId = command.GameClientId,
+                ParticipantClientId = command.ParticipantClientId
 	        });
 	        return NoContent();
         }

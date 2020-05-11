@@ -35,161 +35,19 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
-      }
-    },
-    "/api/Game/{id}": {
+        }
+      },
       "put": {
         "tags": [
           "Game"
         ],
         "operationId": "Game_Update",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "x-position": 1
-          }
-        ],
         "requestBody": {
           "x-name": "command",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateTodoItemCommand"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 2
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/octet-stream": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
-      },
-      "delete": {
-        "tags": [
-          "Game"
-        ],
-        "operationId": "Game_Delete",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "x-position": 1
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/octet-stream": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
-      }
-    },
-    "/api/Game/UpdateItemDetails": {
-      "put": {
-        "tags": [
-          "Game"
-        ],
-        "operationId": "Game_UpdateItemDetails",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "x-position": 1
-          }
-        ],
-        "requestBody": {
-          "x-name": "command",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateTodoItemDetailCommand"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 2
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/octet-stream": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
-      }
-    },
-    "/api/TodoItems": {
-      "post": {
-        "tags": [
-          "TodoItems"
-        ],
-        "operationId": "TodoItems_Create",
-        "requestBody": {
-          "x-name": "command",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateTodoItemCommand"
+                "$ref": "#/components/schemas/UpdateGameCommand"
               }
             }
           },
@@ -200,56 +58,6 @@
           "200": {
             "description": "",
             "content": {
-              "application/json": {
-                "schema": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
-      }
-    },
-    "/api/TodoItems/{id}": {
-      "put": {
-        "tags": [
-          "TodoItems"
-        ],
-        "operationId": "TodoItems_Update",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "x-position": 1
-          }
-        ],
-        "requestBody": {
-          "x-name": "command",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateTodoItemCommand"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 2
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
               "application/octet-stream": {
                 "schema": {
                   "type": "string",
@@ -258,134 +66,19 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
+        }
       },
       "delete": {
         "tags": [
-          "TodoItems"
+          "Game"
         ],
-        "operationId": "TodoItems_Delete",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "x-position": 1
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/octet-stream": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
-      }
-    },
-    "/api/TodoItems/UpdateItemDetails": {
-      "put": {
-        "tags": [
-          "TodoItems"
-        ],
-        "operationId": "TodoItems_UpdateItemDetails",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "x-position": 1
-          }
-        ],
+        "operationId": "Game_LeaveGame",
         "requestBody": {
           "x-name": "command",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateTodoItemDetailCommand"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 2
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/octet-stream": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
-      }
-    },
-    "/api/TodoLists": {
-      "get": {
-        "tags": [
-          "TodoLists"
-        ],
-        "operationId": "TodoLists_Get",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TodosVm"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
-      },
-      "post": {
-        "tags": [
-          "TodoLists"
-        ],
-        "operationId": "TodoLists_Create",
-        "requestBody": {
-          "x-name": "command",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateTodoListCommand"
+                "$ref": "#/components/schemas/UpdateParticipantStatusCommand"
               }
             }
           },
@@ -396,160 +89,74 @@
           "200": {
             "description": "",
             "content": {
-              "application/json": {
+              "application/octet-stream": {
                 "schema": {
-                  "type": "integer",
-                  "format": "int32"
+                  "type": "string",
+                  "format": "binary"
                 }
               }
             }
           }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
+        }
       }
     },
-    "/api/TodoLists/{id}": {
+    "/api/Game/{clientId}": {
       "get": {
         "tags": [
-          "TodoLists"
+          "Game"
         ],
-        "operationId": "TodoLists_Get2",
+        "operationId": "Game_Get",
         "parameters": [
           {
-            "name": "id",
+            "name": "clientId",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string",
+              "format": "guid"
             },
             "x-position": 1
           }
         ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/octet-stream": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
-      },
-      "put": {
-        "tags": [
-          "TodoLists"
-        ],
-        "operationId": "TodoLists_Update",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "x-position": 1
-          }
-        ],
-        "requestBody": {
-          "x-name": "command",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateTodoListCommand"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 2
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/octet-stream": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
-      },
-      "delete": {
-        "tags": [
-          "TodoLists"
-        ],
-        "operationId": "TodoLists_Delete",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "x-position": 1
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/octet-stream": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
-      }
-    },
-    "/api/WeatherForecast": {
-      "get": {
-        "tags": [
-          "WeatherForecast"
-        ],
-        "operationId": "WeatherForecast_Get",
         "responses": {
           "200": {
             "description": "",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/WeatherForecast"
-                  }
+                  "$ref": "#/components/schemas/GameDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Game/{joinCode}": {
+      "post": {
+        "tags": [
+          "Game"
+        ],
+        "operationId": "Game_Join",
+        "parameters": [
+          {
+            "name": "joinCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JoinGameResponse"
                 }
               }
             }
@@ -571,10 +178,6 @@
           "participantClientId": {
             "type": "string",
             "format": "guid"
-          },
-          "joinCode": {
-            "type": "string",
-            "nullable": true
           }
         }
       },
@@ -588,7 +191,7 @@
           }
         }
       },
-      "UpdateTodoItemCommand": {
+      "GameDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -596,91 +199,237 @@
             "type": "integer",
             "format": "int32"
           },
-          "title": {
+          "joinCode": {
             "type": "string",
             "nullable": true
           },
-          "done": {
-            "type": "boolean"
-          }
-        }
-      },
-      "UpdateTodoItemDetailCommand": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "listId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "priority": {
-            "$ref": "#/components/schemas/PriorityLevel"
-          },
-          "note": {
+          "name": {
             "type": "string",
             "nullable": true
+          },
+          "status": {
+            "$ref": "#/components/schemas/GameStatus"
+          },
+          "owner": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/GameParticipantDto"
+              }
+            ]
+          },
+          "participants": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/GameParticipantDto"
+            }
+          },
+          "currentRound": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/GameRoundDto"
+              }
+            ]
+          },
+          "questionsPerRound": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numberOfRounds": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "difficulty": {
+            "$ref": "#/components/schemas/Difficulty"
+          },
+          "categories": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/QuestionCategoryDto"
+            }
           }
         }
       },
-      "PriorityLevel": {
+      "GameStatus": {
         "type": "integer",
         "description": "",
         "x-enumNames": [
-          "None",
-          "Low",
-          "Medium",
-          "High"
+          "Lobby",
+          "InProgress",
+          "Over"
         ],
         "enum": [
           0,
           1,
-          2,
-          3
+          2
         ]
       },
-      "CreateTodoItemCommand": {
+      "GameParticipantDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "listId": {
+          "id": {
             "type": "integer",
             "format": "int32"
           },
-          "title": {
+          "name": {
             "type": "string",
             "nullable": true
+          },
+          "status": {
+            "$ref": "#/components/schemas/ParticipantStatus"
+          },
+          "isOwner": {
+            "type": "boolean"
+          },
+          "image": {
+            "type": "string",
+            "nullable": true
+          },
+          "totalScore": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "roundScore": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },
-      "TodosVm": {
+      "ParticipantStatus": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "Active",
+          "Inactive",
+          "Disconnected",
+          "Left"
+        ],
+        "enum": [
+          1,
+          2,
+          4,
+          8
+        ]
+      },
+      "GameRoundDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "priorityLevels": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "type": {
+            "$ref": "#/components/schemas/GameType"
+          },
+          "currentQuestion": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/QuestionDto"
+              }
+            ]
+          },
+          "currentQuestionTimeUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "currentQuestionIndex": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "GameType": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "Quiz",
+          "Doodle"
+        ],
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "QuestionDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "question": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "$ref": "#/components/schemas/QuestionType"
+          },
+          "difficulty": {
+            "$ref": "#/components/schemas/Difficulty"
+          },
+          "categories": {
             "type": "array",
             "nullable": true,
             "items": {
-              "$ref": "#/components/schemas/PriorityLevelDto"
+              "$ref": "#/components/schemas/QuestionCategoryDto"
             }
           },
-          "lists": {
+          "answers": {
             "type": "array",
             "nullable": true,
             "items": {
-              "$ref": "#/components/schemas/TodoListDto"
+              "type": "string"
             }
           }
         }
       },
-      "PriorityLevelDto": {
+      "QuestionType": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "SingleChoiceQuestion",
+          "MultipleChoiceQuestion",
+          "FreeTextQuestion",
+          "SingleChoiceBuzzInQuestion",
+          "FreeTextDoodle"
+        ],
+        "enum": [
+          1,
+          2,
+          4,
+          9,
+          16
+        ]
+      },
+      "Difficulty": {
+        "type": "integer",
+        "description": "",
+        "x-enumFlags": true,
+        "x-enumNames": [
+          "Easy",
+          "Average",
+          "Hard",
+          "VeryHard"
+        ],
+        "enum": [
+          1,
+          2,
+          4,
+          8
+        ]
+      },
+      "QuestionCategoryDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "value": {
+          "id": {
             "type": "integer",
             "format": "int32"
           },
@@ -690,101 +439,101 @@
           }
         }
       },
-      "TodoListDto": {
+      "JoinGameResponse": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "title": {
+          "gameClientId": {
             "type": "string",
-            "nullable": true
+            "format": "guid"
           },
-          "items": {
-            "type": "array",
+          "game": {
             "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/TodoItemDto"
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/GameDto"
+              }
+            ]
+          },
+          "participantClientId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "participant": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/GameParticipantDto"
+              }
+            ]
+          }
+        }
+      },
+      "UpdateGameCommand": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ParticipantGameCommand"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string",
+                "nullable": true
+              },
+              "questionsPerRound": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "numberOfRounds": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "difficulty": {
+                "$ref": "#/components/schemas/Difficulty"
+              },
+              "categories": {
+                "type": "array",
+                "nullable": true,
+                "items": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
             }
           }
-        }
+        ]
       },
-      "TodoItemDto": {
+      "ParticipantGameCommand": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "listId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "title": {
+          "gameClientId": {
             "type": "string",
-            "nullable": true
+            "format": "guid"
           },
-          "done": {
-            "type": "boolean"
-          },
-          "priority": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "note": {
+          "participantClientId": {
             "type": "string",
-            "nullable": true
+            "format": "guid"
           }
         }
       },
-      "CreateTodoListCommand": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "title": {
-            "type": "string",
-            "nullable": true
+      "UpdateParticipantStatusCommand": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ParticipantGameCommand"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "newStatus": {
+                "$ref": "#/components/schemas/ParticipantStatus"
+              }
+            }
           }
-        }
-      },
-      "UpdateTodoListCommand": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "title": {
-            "type": "string",
-            "nullable": true
-          }
-        }
-      },
-      "WeatherForecast": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "date": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "temperatureC": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "temperatureF": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "summary": {
-            "type": "string",
-            "nullable": true
-          }
-        }
+        ]
       }
     },
     "securitySchemes": {

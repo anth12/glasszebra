@@ -29,11 +29,7 @@ namespace CleanArchitecture.Infrastructure.Persistence
             _currentUserService = currentUserService;
             _dateTime = dateTime;
         }
-
-        public DbSet<TodoList> TodoLists { get; set; }
-
-        public DbSet<TodoItem> TodoItems { get; set; }
-
+        
         public DbSet<Game> Games { get; set; }
         public DbSet<GameParticipant> Participants { get; set; }
         public DbSet<GameRound> GameRounds { get; set; }

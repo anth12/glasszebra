@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using CleanArchitecture.Application.Common.Mappings;
-using CleanArchitecture.Application.TodoLists.Queries.GetTodos;
 using CleanArchitecture.Domain.Entities;
 using NUnit.Framework;
 using System;
+using CleanArchitecture.Application.Game.Dtos;
 
 namespace CleanArchitecture.Application.UnitTests.Common.Mappings
 {
@@ -29,8 +29,13 @@ namespace CleanArchitecture.Application.UnitTests.Common.Mappings
         }
         
         [Test]
-        [TestCase(typeof(TodoList), typeof(TodoListDto))]
-        [TestCase(typeof(TodoItem), typeof(TodoItemDto))]
+        [TestCase(typeof(Domain.Entities.Game), typeof(GameDto))]
+        [TestCase(typeof(GameParticipant), typeof(GameParticipantDto))]
+        [TestCase(typeof(GameRound), typeof(GameRoundDto))]
+        [TestCase(typeof(QuestionCategory), typeof(QuestionCategoryDto))]
+        [TestCase(typeof(GameRound), typeof(GameRoundDto))]
+        [TestCase(typeof(Question), typeof(QuestionDto))]
+        [TestCase(typeof(QuestionCategory), typeof(QuestionCategoryDto))]
         public void ShouldSupportMappingFromSourceToDestination(Type source, Type destination)
         {
             var instance = Activator.CreateInstance(source);
