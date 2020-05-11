@@ -14,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using NSwag;
 using NSwag.Generation.Processors.Security;
 using System.Linq;
+using CleanArchitecture.WebUI.Hubs;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 
 namespace CleanArchitecture.WebUI
@@ -44,6 +45,7 @@ namespace CleanArchitecture.WebUI
                 options.Filters.Add(new ApiExceptionFilter()));
 
             services.AddRazorPages();
+            services.AddSignalR();
 
             services.AddCors(cors =>
             {
@@ -128,6 +130,7 @@ namespace CleanArchitecture.WebUI
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
+                endpoints.MapHub<GameHub>("/gameHub");
             });
 
             app.UseSpa(spa =>

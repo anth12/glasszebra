@@ -67,37 +67,6 @@
             }
           }
         }
-      },
-      "delete": {
-        "tags": [
-          "Game"
-        ],
-        "operationId": "Game_LeaveGame",
-        "requestBody": {
-          "x-name": "command",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateParticipantStatusCommand"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 1
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/octet-stream": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          }
-        }
       }
     },
     "/api/Game/{clientId}": {
@@ -132,7 +101,7 @@
         }
       }
     },
-    "/api/Game/{joinCode}": {
+    "/api/Game/Join/{joinCode}": {
       "post": {
         "tags": [
           "Game"
@@ -157,6 +126,39 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/JoinGameResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Game/Leave": {
+      "post": {
+        "tags": [
+          "Game"
+        ],
+        "operationId": "Game_Leave",
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParticipantGameCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
                 }
               }
             }
@@ -518,22 +520,6 @@
             "format": "guid"
           }
         }
-      },
-      "UpdateParticipantStatusCommand": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/ParticipantGameCommand"
-          },
-          {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-              "newStatus": {
-                "$ref": "#/components/schemas/ParticipantStatus"
-              }
-            }
-          }
-        ]
       }
     },
     "securitySchemes": {

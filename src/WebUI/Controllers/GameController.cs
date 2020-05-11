@@ -5,7 +5,6 @@ using CleanArchitecture.Application.Game.Commands;
 using CleanArchitecture.Application.Game.Commands.CreateGame;
 using CleanArchitecture.Application.Game.Commands.JoinGame;
 using CleanArchitecture.Application.Game.Commands.UpdateGame;
-using CleanArchitecture.Application.Game.Commands.UpdateParticipant;
 using CleanArchitecture.Application.Game.Commands.UpdateParticipantStatus;
 using CleanArchitecture.Application.Game.Dtos;
 using CleanArchitecture.Application.Game.Queries.GetGame;
@@ -27,7 +26,7 @@ namespace CleanArchitecture.WebUI.Controllers
             return await Mediator.Send(new GetGameQuery{ ClientId = clientId});
         }
 
-        [HttpPost("{joinCode}")]
+        [HttpPost("[action]/{joinCode}")]
         public async Task<ActionResult<JoinGameResponse>> Join(string joinCode)
         {
             return await Mediator.Send(new JoinGameCommand
@@ -43,8 +42,8 @@ namespace CleanArchitecture.WebUI.Controllers
             return NoContent();
         }
 
-        [HttpDelete]
-        public async Task<ActionResult> LeaveGame(UpdateParticipantStatusCommand command)
+        [HttpPost("[action]")]
+        public async Task<ActionResult> Leave(ParticipantGameCommand command)
         {
 	        await Mediator.Send(new UpdateParticipantStatusCommand
 	        {

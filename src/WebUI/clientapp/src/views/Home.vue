@@ -57,7 +57,7 @@ export default class Home extends Vue {
       }).catch(response=>{
         console.error('Failed to load existing game');
         console.error(response);
-        alert(`Couldn't create game`);
+        alert(`Couldn't load game`);
 
       }).then(()=>{
         this.isLoading = false;

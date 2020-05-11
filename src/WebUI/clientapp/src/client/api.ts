@@ -10,9 +10,9 @@
 export interface IGameClient {
     create(command: CreateGameCommand): Promise<CreateGameResponse>;
     update(command: UpdateGameCommand): Promise<FileResponse>;
-    leaveGame(command: UpdateParticipantStatusCommand): Promise<FileResponse>;
     get(clientId: string): Promise<GameDto>;
     join(joinCode: string | null): Promise<JoinGameResponse>;
+    leave(command: ParticipantGameCommand): Promise<FileResponse>;
 }
 
 export class GameClient implements IGameClient {
@@ -99,42 +99,6 @@ export class GameClient implements IGameClient {
         return Promise.resolve<FileResponse>(<any>null);
     }
 
-    leaveGame(command: UpdateParticipantStatusCommand): Promise<FileResponse> {
-        let url_ = this.baseUrl + "/api/Game";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(command);
-
-        let options_ = <RequestInit>{
-            body: content_,
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/octet-stream"
-            }
-        };
-
-        return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processLeaveGame(_response);
-        });
-    }
-
-    protected processLeaveGame(response: Response): Promise<FileResponse> {
-        const status = response.status;
-        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
-        } else if (status !== 200 && status !== 204) {
-            return response.text().then((_responseText) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            });
-        }
-        return Promise.resolve<FileResponse>(<any>null);
-    }
-
     get(clientId: string): Promise<GameDto> {
         let url_ = this.baseUrl + "/api/Game/{clientId}";
         if (clientId === undefined || clientId === null)
@@ -173,7 +137,7 @@ export class GameClient implements IGameClient {
     }
 
     join(joinCode: string | null): Promise<JoinGameResponse> {
-        let url_ = this.baseUrl + "/api/Game/{joinCode}";
+        let url_ = this.baseUrl + "/api/Game/Join/{joinCode}";
         if (joinCode === undefined || joinCode === null)
             throw new Error("The parameter 'joinCode' must be defined.");
         url_ = url_.replace("{joinCode}", encodeURIComponent("" + joinCode)); 
@@ -207,6 +171,42 @@ export class GameClient implements IGameClient {
             });
         }
         return Promise.resolve<JoinGameResponse>(<any>null);
+    }
+
+    leave(command: ParticipantGameCommand): Promise<FileResponse> {
+        let url_ = this.baseUrl + "/api/Game/Leave";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(command);
+
+        let options_ = <RequestInit>{
+            body: content_,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/octet-stream"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processLeave(_response);
+        });
+    }
+
+    protected processLeave(response: Response): Promise<FileResponse> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<FileResponse>(<any>null);
     }
 }
 
@@ -778,39 +778,6 @@ export interface IUpdateGameCommand extends IParticipantGameCommand {
     numberOfRounds?: number;
     difficulty?: Difficulty;
     categories?: number[] | undefined;
-}
-
-export class UpdateParticipantStatusCommand extends ParticipantGameCommand implements IUpdateParticipantStatusCommand {
-    newStatus?: ParticipantStatus;
-
-    constructor(data?: IUpdateParticipantStatusCommand) {
-        super(data);
-    }
-
-    init(_data?: any) {
-        super.init(_data);
-        if (_data) {
-            this.newStatus = _data["newStatus"];
-        }
-    }
-
-    static fromJS(data: any): UpdateParticipantStatusCommand {
-        data = typeof data === 'object' ? data : {};
-        let result = new UpdateParticipantStatusCommand();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["newStatus"] = this.newStatus;
-        super.toJSON(data);
-        return data; 
-    }
-}
-
-export interface IUpdateParticipantStatusCommand extends IParticipantGameCommand {
-    newStatus?: ParticipantStatus;
 }
 
 export interface FileResponse {
