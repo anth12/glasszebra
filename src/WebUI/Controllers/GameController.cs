@@ -1,33 +1,34 @@
 ﻿using System;
-using CleanArchitecture.Application.TodoItems.Commands.DeleteTodoItem;
-using CleanArchitecture.Application.TodoItems.Commands.UpdateTodoItem;
-using CleanArchitecture.Application.TodoItems.Commands.UpdateTodoItemDetail;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using CleanArchitecture.Application.Game.CreateGame;
-using CleanArchitecture.Application.Game.JoinGame;
-using GetGameResponse = CleanArchitecture.Application.Game.CreateGame.GetGameResponse;
+using CleanArchitecture.Application.Game.Commands;
+using CleanArchitecture.Application.Game.Commands.CreateGame;
+using CleanArchitecture.Application.Game.Commands.JoinGame;
+using CleanArchitecture.Application.Game.Commands.UpdateGame;
+using CleanArchitecture.Application.Game.Commands.UpdateParticipant;
+using CleanArchitecture.Application.Game.Commands.UpdateParticipantStatus;
+using CleanArchitecture.Application.Game.Dtos;
+using CleanArchitecture.Application.Game.Queries.GetGame;
+using CleanArchitecture.Domain.Enums;
 
 namespace CleanArchitecture.WebUI.Controllers
 {
-    [Authorize]
     public class GameController : ApiController
     {
 	    [HttpPost]
-	    public async Task<ActionResult<GetGameResponse>> Create(GetGameCommand command)
+	    public async Task<ActionResult<CreateGameResponse>> Create(CreateGameCommand command)
 	    {
 		    return await Mediator.Send(command);
 	    }
 
-        [HttpPost]
-        public async Task<ActionResult<GetGameResponse>> Create(GetGameCommand command)
+        [HttpGet("{clientId}")]
+        public async Task<ActionResult<GameDto>> Get(Guid clientId)
         {
-            return await Mediator.Send(command);
+            return await Mediator.Send(new GetGameQuery{ ClientId = clientId});
         }
 
         [HttpPost("{joinCode}")]
-        public async Task<ActionResult<JoinGameResponse>> Update(string joinCode)
+        public async Task<ActionResult<JoinGameResponse>> Join(string joinCode)
         {
             return await Mediator.Send(new JoinGameCommand
             {
@@ -35,25 +36,21 @@ namespace CleanArchitecture.WebUI.Controllers
             });
         }
 
-        [HttpPut("[action]")]
-        public async Task<ActionResult> UpdateItemDetails(int id, UpdateTodoItemDetailCommand command)
+        [HttpPut]
+        public async Task<ActionResult> Update(UpdateGameCommand command)
         {
-            if (id != command.Id)
-            {
-                return BadRequest();
-            }
-
-            await Mediator.Send(command);
-
+	        await Mediator.Send(command);
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id)
+        [HttpPut]
+        public async Task<ActionResult> LeaveGame(UpdateParticipantStatusCommand command)
         {
-            await Mediator.Send(new DeleteTodoItemCommand { Id = id });
-
-            return NoContent();
+	        await Mediator.Send(new UpdateParticipantStatusCommand
+	        {
+                NewStatus = ParticipantStatus.Left
+	        });
+	        return NoContent();
         }
     }
 }

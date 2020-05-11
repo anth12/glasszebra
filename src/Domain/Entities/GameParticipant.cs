@@ -1,5 +1,6 @@
 ﻿using System;
 using CleanArchitecture.Domain.Common;
+using CleanArchitecture.Domain.Enums;
 
 namespace CleanArchitecture.Domain.Entities
 {
@@ -14,6 +15,10 @@ namespace CleanArchitecture.Domain.Entities
 		
 		public Guid ClientId { get; set; }
 
+		public ParticipantStatus Status { get; set; }
+
+		public bool IsOwner { get; set; }
+
 		public string Name { get; set; }
 
 		public string Image { get; set; }
@@ -22,6 +27,8 @@ namespace CleanArchitecture.Domain.Entities
 
 		public Game Game { get; set; }
 
-		public int Score { get; set; }
+		public int TotalScore { get; set; }
+
+		public int RoundScore { get; set; }
 	}
 }

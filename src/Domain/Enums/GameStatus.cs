@@ -5,7 +5,7 @@
 		/// <summary>
 		/// Game has been created & is being setup
 		/// </summary>
-		Setup,
+		//Setup,
 
 		/// <summary>
 		/// Game is setup & waiting for participants to join the lobby

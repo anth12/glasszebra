@@ -9,7 +9,7 @@ namespace CleanArchitecture.Application.Common.Extensions
 {
 	public static class ApplicationDbContextExtensions
 	{
-		public static TEntity FindByClientId<TEntity>(this DbSet<TEntity> dbSet, Guid clientId) 
+		public static TEntity FindByClientId<TEntity>(this IQueryable<TEntity> dbSet, Guid clientId) 
 			where TEntity : class, IHaveClientId
 		{
 			var entity = dbSet.FirstOrDefault(e => e.ClientId == clientId);
@@ -20,7 +20,7 @@ namespace CleanArchitecture.Application.Common.Extensions
 			return entity;
 		}
 
-		public static async Task<TEntity> FindByClientIdAsync<TEntity>(this DbSet<TEntity> dbSet, Guid clientId)
+		public static async Task<TEntity> FindByClientIdAsync<TEntity>(this IQueryable<TEntity> dbSet, Guid clientId)
 			where TEntity : class, IHaveClientId
 		{
 			var entity = await dbSet.FirstOrDefaultAsync(e => e.ClientId == clientId);

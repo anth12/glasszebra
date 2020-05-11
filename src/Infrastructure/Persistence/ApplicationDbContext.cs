@@ -11,8 +11,6 @@ using System.Data;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using CleanArchitecture.Domain.Entities.Doodle;
-using CleanArchitecture.Domain.Entities.Quiz;
 
 namespace CleanArchitecture.Infrastructure.Persistence
 {
@@ -39,11 +37,10 @@ namespace CleanArchitecture.Infrastructure.Persistence
         public DbSet<Game> Games { get; set; }
         public DbSet<GameParticipant> Participants { get; set; }
         public DbSet<GameRound> GameRounds { get; set; }
-        public DbSet<QuizRound> QuizRounds { get; set; }
-        public DbSet<QuizQuestion> QuizQuestions { get; set; }
-        public DbSet<QuizAnswer> QuizAnswers { get; set; }
-        public DbSet<DoodleRound> DoodleRounds { get; set; }
-        public DbSet<DoodleQuestion> DoodleQuestions { get; set; }
+        public DbSet<QuestionCategory> Categories { get; set; }
+        public DbSet<SeenQuestion> SeenQuestions { get; set; }
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<Answer> Answers { get; set; }
 
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())

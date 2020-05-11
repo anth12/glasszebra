@@ -10,8 +10,6 @@ namespace CleanArchitecture.Domain.Entities
 		public Game()
 		{
 			ClientId = Guid.NewGuid();
-			Participants = new List<GameParticipant>();
-			//GameRounds = new List<GameRound>();
 		}
 
 		public int Id { get; set; }
@@ -22,10 +20,14 @@ namespace CleanArchitecture.Domain.Entities
 		public string Name { get; set; }
 
 		public GameStatus Status { get; set; }
+		
+		public IList<GameParticipant> Participants { get; set; } = new List<GameParticipant>();
 
-		public GameParticipant Owner { get; set; }
+		public GameRound CurrentRound { get; set; }
 
-		public IList<GameParticipant> Participants { get; set; }
-		//public IList<GameRound> GameRounds { get; set; }
+		public int QuestionsPerRound { get; set; }
+		public int NumberOfRounds { get; set; }
+		public Difficulty Difficulty { get; set; }
+		public IList<QuestionCategory> Categories { get; set; } = new List<QuestionCategory>();
 	}
 }

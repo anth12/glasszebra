@@ -7,13 +7,14 @@ using CleanArchitecture.WebUI.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.AspNetCore.SpaServices.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NSwag;
 using NSwag.Generation.Processors.Security;
 using System.Linq;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 
 namespace CleanArchitecture.WebUI
 {
@@ -43,6 +44,16 @@ namespace CleanArchitecture.WebUI
                 options.Filters.Add(new ApiExceptionFilter()));
 
             services.AddRazorPages();
+
+            services.AddCors(cors =>
+            {
+	            cors.AddPolicy("AllowMyOrigin",
+		            builder => builder
+			            .AllowAnyOrigin()
+                        //.WithOrigins("http://localhost:8081")
+                        .AllowAnyMethod()
+			            .AllowAnyHeader());
+            });
 
             // Customise default API behaviour
             services.Configure<ApiBehaviorOptions>(options =>
@@ -102,6 +113,12 @@ namespace CleanArchitecture.WebUI
 
             app.UseRouting();
 
+            app.UseCors("AllowMyOrigin");
+            //app.UseCors(c => c
+	           // .AllowAnyOrigin()
+	           // //.WithOrigins("http://localhost:8081")
+	           // .AllowAnyMethod());
+
             app.UseAuthentication();
             app.UseIdentityServer();
             app.UseAuthorization();
@@ -115,14 +132,11 @@ namespace CleanArchitecture.WebUI
 
             app.UseSpa(spa =>
             {
-                // To learn more about options for serving an Angular SPA from ASP.NET Core,
-                // see https://go.microsoft.com/fwlink/?linkid=864501
-
-                spa.Options.SourcePath = "ClientApp";
+	            spa.Options.SourcePath = "Client";
 
                 if (env.IsDevelopment())
                 {
-                    spa.UseAngularCliServer(npmScript: "start");
+	                //spa.UseVueDevelopmentServer();
                 }
             });
         }

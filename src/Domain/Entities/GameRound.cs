@@ -1,5 +1,4 @@
-﻿using CleanArchitecture.Domain.Entities.Doodle;
-using CleanArchitecture.Domain.Entities.Quiz;
+﻿using System;
 using CleanArchitecture.Domain.Enums;
 
 namespace CleanArchitecture.Domain.Entities
@@ -9,12 +8,12 @@ namespace CleanArchitecture.Domain.Entities
 		public int Id { get; set; }
 		
 		public GameType Type { get; set; }
-		public int Order { get; set; }
 
-		public int? QuizRoundId { get; set; }
-		public QuizRound QuizRound { get; set; }
+		public int CurrentQuestionId { get; set; }
+		public Question CurrentQuestion { get; set; }
+		
+		public DateTime CurrentQuestionTimeUtc { get; set; }
 
-		public int? DoodleRoundId { get; set; }
-		public DoodleRound DoodleRound { get; set; }
+		public int CurrentQuestionIndex { get; set; }
 	}
 }
