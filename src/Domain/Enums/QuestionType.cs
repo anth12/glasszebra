@@ -3,17 +3,17 @@
 	public enum QuestionType
 	{
 		/// <summary>
-		/// Standard single correct answer, participants answer independently
+		/// Standard single correct answer, players answer independently
 		/// </summary>
 		SingleChoiceQuestion = 1,
 
 		/// <summary>
-		/// Standard multiple choice, participants answer independently
+		/// Standard multiple choice, players answer independently
 		/// </summary>
 		MultipleChoiceQuestion = 1<<1,
 
 		/// <summary>
-		/// Question with no options, participants must type answer
+		/// Question with no options, players must type answer
 		/// </summary>
 		FreeTextQuestion = 1<<2,
 
@@ -23,7 +23,7 @@
 		SingleChoiceBuzzInQuestion = 1<<3 | SingleChoiceQuestion,
 
 		/// <summary>
-		/// Doodle (drawing) with no options, participants must type answer
+		/// Doodle (drawing) with no options, players must type answer
 		/// </summary>
 		FreeTextDoodle = 1<<4 
 	}

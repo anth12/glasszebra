@@ -2,9 +2,9 @@
 
 namespace CleanArchitecture.Application.Game.Commands
 {
-	public class ParticipantGameCommand
+	public class PlayerGameCommand
 	{
 		public Guid GameClientId { get; set; }
-		public Guid ParticipantClientId { get; set; }
+		public Guid PlayerClientId { get; set; }
 	}
 }

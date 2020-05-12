@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using CleanArchitecture.Application.Common.Exceptions;
 using CleanArchitecture.Application.Common.Interfaces;
 using CleanArchitecture.Application.Events;
-using CleanArchitecture.Application.Game.Commands.UpdateParticipant;
 using CleanArchitecture.Application.Services.Game;
 using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Domain.Enums;
@@ -37,23 +36,23 @@ namespace CleanArchitecture.Application.Game.Commands.JoinGame
 			if (game.Status != GameStatus.Lobby)
 				throw new InvalidStatusException(game.Status);
 
-			var participantName = _randomNameService.CreateParticipantName();
-			var participant = new GameParticipant
+			var playerName = _randomNameService.CreatePlayerName();
+			var player = new GamePlayer
 			{
-				Name = participantName
+				Name = playerName
 			};
 
-			game.Participants.Add(participant);
+			game.Players.Add(player);
 
 			await _context.SaveChangesAsync(cancellationToken);
 
-			var @event = new ParticipantUpdatedEvent(true, participant.GameId, participant.Id);
+			var @event = new PlayerUpdatedEvent(true, player.GameId, player.Id);
 			await _mediator.Publish(@event, cancellationToken);
 			
 			return new JoinGameResponse
 			{
 				GameClientId = game.ClientId,
-				ParticipantClientId = participant.ClientId
+				PlayerClientId = player.ClientId
 			};
 		}
 	}

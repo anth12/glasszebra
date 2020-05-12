@@ -11,7 +11,7 @@ using MediatR;
 
 namespace CleanArchitecture.Application.Game.Commands.UpdateGame
 {
-	public class UpdateGameCommand : ParticipantGameCommand, IRequest
+	public class UpdateGameCommand : PlayerGameCommand, IRequest
 	{
 		public string Name { get; set; }
 
@@ -36,10 +36,10 @@ namespace CleanArchitecture.Application.Game.Commands.UpdateGame
 		public async Task<Unit> Handle(UpdateGameCommand request, CancellationToken cancellationToken)
 		{
 			var game = await _context.Games.FindByClientIdAsync(request.GameClientId);
-			var participant = game.Participants.FirstOrDefault(p => p.ClientId == request.ParticipantClientId);
+			var player = game.Players.FirstOrDefault(p => p.ClientId == request.PlayerClientId);
 
-			if(participant == null || participant.IsOwner)
-				throw new UnauthorizedUpdateException(game.Id, request.ParticipantClientId);
+			if(player == null || player.IsOwner)
+				throw new UnauthorizedUpdateException(game.Id, request.PlayerClientId);
 
 			game.Name = request.Name;
 			game.QuestionsPerRound = request.QuestionsPerRound;

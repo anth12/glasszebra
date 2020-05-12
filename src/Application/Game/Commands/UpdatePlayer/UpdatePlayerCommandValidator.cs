@@ -5,13 +5,13 @@ using CleanArchitecture.Application.Common.Interfaces;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
-namespace CleanArchitecture.Application.Game.Commands.UpdateParticipant
+namespace CleanArchitecture.Application.Game.Commands.UpdatePlayer
 {
-	public class UpdateParticipantCommandValidator : AbstractValidator<UpdateParticipantCommand>
+	public class UpdatePlayerCommandValidator : AbstractValidator<UpdatePlayerCommand>
 	{
 		private readonly IApplicationDbContext _context;
 
-		public UpdateParticipantCommandValidator(IApplicationDbContext context)
+		public UpdatePlayerCommandValidator(IApplicationDbContext context)
 		{
 			_context = context;
 
@@ -22,9 +22,9 @@ namespace CleanArchitecture.Application.Game.Commands.UpdateParticipant
 				.MustAsync(BeUniqueName).WithMessage("The specified Name already exists.");
 		}
 
-		public async Task<bool> BeUniqueName(UpdateParticipantCommand model, string name, CancellationToken cancellationToken)
+		public async Task<bool> BeUniqueName(UpdatePlayerCommand model, string name, CancellationToken cancellationToken)
 		{
-			return await _context.Participants
+			return await _context.Players
 				.Where(p=> p.Game.ClientId == model.ClientId)
 				.AllAsync(l => l.Name != name, cancellationToken);
 		}

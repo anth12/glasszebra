@@ -8,7 +8,7 @@ namespace CleanArchitecture.Application.Game.Commands.JoinGame
 		public Guid GameClientId { get; set; }
 		public GameDto Game { get; set; }
 
-		public Guid ParticipantClientId { get; set; }
-		public GameParticipantDto Participant { get; set; }
+		public Guid PlayerClientId { get; set; }
+		public GamePlayerDto Player { get; set; }
 	}
 }

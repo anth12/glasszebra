@@ -9,7 +9,7 @@ namespace CleanArchitecture.Application.Services.Game
 		
 		private readonly Random _random = new Random();
 
-		public string CreateParticipantName()
+		public string CreatePlayerName()
 		{
 			var randomAdjective = adjectives[_random.Next(0, adjectives.Length - 0)];
 			var randomAnimal = animalNames[_random.Next(0, animalNames.Length - 0)];

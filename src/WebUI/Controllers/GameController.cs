@@ -5,7 +5,7 @@ using CleanArchitecture.Application.Game.Commands;
 using CleanArchitecture.Application.Game.Commands.CreateGame;
 using CleanArchitecture.Application.Game.Commands.JoinGame;
 using CleanArchitecture.Application.Game.Commands.UpdateGame;
-using CleanArchitecture.Application.Game.Commands.UpdateParticipantStatus;
+using CleanArchitecture.Application.Game.Commands.UpdatePlayerStatus;
 using CleanArchitecture.Application.Game.Dtos;
 using CleanArchitecture.Application.Game.Queries.GetGame;
 using CleanArchitecture.Domain.Enums;
@@ -43,13 +43,13 @@ namespace CleanArchitecture.WebUI.Controllers
         }
 
         [HttpPost("[action]")]
-        public async Task<ActionResult> Leave(ParticipantGameCommand command)
+        public async Task<ActionResult> Leave(PlayerGameCommand command)
         {
-	        await Mediator.Send(new UpdateParticipantStatusCommand
+	        await Mediator.Send(new UpdatePlayerStatusCommand
 	        {
-                NewStatus = ParticipantStatus.Left,
+                NewStatus = PlayerStatus.Left,
                 GameClientId = command.GameClientId,
-                ParticipantClientId = command.ParticipantClientId
+                PlayerClientId = command.PlayerClientId
 	        });
 	        return NoContent();
         }

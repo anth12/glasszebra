@@ -31,7 +31,7 @@ namespace CleanArchitecture.Infrastructure.Persistence
         }
         
         public DbSet<Game> Games { get; set; }
-        public DbSet<GameParticipant> Participants { get; set; }
+        public DbSet<GamePlayer> Players { get; set; }
         public DbSet<GameRound> GameRounds { get; set; }
         public DbSet<QuestionCategory> Categories { get; set; }
         public DbSet<SeenQuestion> SeenQuestions { get; set; }

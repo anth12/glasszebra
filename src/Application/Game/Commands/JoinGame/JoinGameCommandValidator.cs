@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CleanArchitecture.Application.Game.Commands.JoinGame
 {
-	public class UpdateParticipantCommandValidator : AbstractValidator<JoinGameCommand>
+	public class UpdatePlayerCommandValidator : AbstractValidator<JoinGameCommand>
 	{
-		private IApplicationDbContext _context;
-		public UpdateParticipantCommandValidator(IApplicationDbContext context)
+		private readonly IApplicationDbContext _context;
+		public UpdatePlayerCommandValidator(IApplicationDbContext context)
 		{
 			_context = context;
 

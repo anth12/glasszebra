@@ -30,7 +30,7 @@ namespace CleanArchitecture.Application.UnitTests.Common.Mappings
         
         [Test]
         [TestCase(typeof(Domain.Entities.Game), typeof(GameDto))]
-        [TestCase(typeof(GameParticipant), typeof(GameParticipantDto))]
+        [TestCase(typeof(GamePlayer), typeof(GamePlayerDto))]
         [TestCase(typeof(GameRound), typeof(GameRoundDto))]
         [TestCase(typeof(QuestionCategory), typeof(QuestionCategoryDto))]
         [TestCase(typeof(GameRound), typeof(GameRoundDto))]

@@ -29,7 +29,7 @@ namespace CleanArchitecture.Application.Game.Queries.GetGame
 		public async Task<GameDto> Handle(GetGameQuery request, CancellationToken cancellationToken)
 		{
 			var game = await _context.Games
-				.Include(g=> g.Participants)
+				.Include(g=> g.Players)
 				.Include(g=> g.Categories)
 				.Include(g=> g.CurrentRound)
 				.Include(g=> g.CurrentRound.CurrentQuestion)

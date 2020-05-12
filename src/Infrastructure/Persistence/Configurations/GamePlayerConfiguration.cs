@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CleanArchitecture.Infrastructure.Persistence.Configurations
 {
-    public class GameParticipantConfiguration : IEntityTypeConfiguration<GameParticipant>
+    public class GamePlayerConfiguration : IEntityTypeConfiguration<GamePlayer>
     {
-        public void Configure(EntityTypeBuilder<GameParticipant> builder)
+        public void Configure(EntityTypeBuilder<GamePlayer> builder)
         {
             builder.Property(t => t.Name)
                 .HasMaxLength(55)

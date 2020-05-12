@@ -45,16 +45,21 @@ namespace CleanArchitecture.WebUI
                 options.Filters.Add(new ApiExceptionFilter()));
 
             services.AddRazorPages();
-            services.AddSignalR();
+            services.AddSignalR(c =>
+            {
+                
+            });
 
             services.AddCors(cors =>
             {
 	            cors.AddPolicy("AllowMyOrigin",
 		            builder => builder
-			            .AllowAnyOrigin()
-                        //.WithOrigins("http://localhost:8081")
+			            //.AllowAnyOrigin()
+                        .WithOrigins("http://localhost:8080")
                         .AllowAnyMethod()
-			            .AllowAnyHeader());
+			            .AllowAnyHeader()
+			            .AllowCredentials()
+		            );
             });
 
             // Customise default API behaviour
@@ -64,10 +69,10 @@ namespace CleanArchitecture.WebUI
             });
 
             // In production, the Angular files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/dist";
-            });
+            //services.AddSpaStaticFiles(configuration =>
+            //{
+            //    configuration.RootPath = "ClientApp/dist";
+            //});
 
             services.AddOpenApiDocument(configure =>
             {
@@ -104,7 +109,7 @@ namespace CleanArchitecture.WebUI
             app.UseStaticFiles();
             if (!env.IsDevelopment())
             {
-                app.UseSpaStaticFiles();
+                //app.UseSpaStaticFiles();
             }
 
             app.UseSwaggerUi3(settings =>
@@ -121,6 +126,7 @@ namespace CleanArchitecture.WebUI
 	           // //.WithOrigins("http://localhost:8081")
 	           // .AllowAnyMethod());
 
+            
             app.UseAuthentication();
             app.UseIdentityServer();
             app.UseAuthorization();
@@ -130,18 +136,21 @@ namespace CleanArchitecture.WebUI
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
-                endpoints.MapHub<GameHub>("/gameHub");
-            });
-
-            app.UseSpa(spa =>
-            {
-	            spa.Options.SourcePath = "Client";
-
-                if (env.IsDevelopment())
+                endpoints.MapHub<GameHub>("/gameHub", c =>
                 {
-	                //spa.UseVueDevelopmentServer();
-                }
+                    
+                });
             });
+
+            //app.UseSpa(spa =>
+            //{
+	           // spa.Options.SourcePath = "ClientApp";
+
+            //    if (env.IsDevelopment())
+            //    {
+	           //     //spa.UseVueDevelopmentServer();
+            //    }
+            //});
         }
     }
 }

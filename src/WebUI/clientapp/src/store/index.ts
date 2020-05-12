@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { IGameDto } from '../client/api'
+import { GameHub } from '../hubs/gameHub';
 
 Vue.use(Vuex)
 
@@ -8,6 +9,8 @@ export interface StoreState{
   game: null | IGameDto;
   gameClientId: string;
   participantClientId: string;
+
+  gameHub: GameHub;
 }
 
 export default new Vuex.Store({
@@ -40,6 +43,12 @@ export default new Vuex.Store({
 
     addGame(context, game: IGameDto){
       context.commit('addGame', game);
+
+      if(game != null){
+        console.log('connecting');
+        context.state.gameHub = new GameHub();
+        context.state.gameHub.connect();
+      }
     },
 
     addGameClientId(context, clientId: string) {

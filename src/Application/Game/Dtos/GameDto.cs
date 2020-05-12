@@ -13,9 +13,9 @@ namespace CleanArchitecture.Application.Game.Dtos
 
 		public GameStatus Status { get; set; }
 
-		public GameParticipantDto Owner { get; set; }
+		public GamePlayerDto Owner { get; set; }
 
-		public IList<GameParticipantDto> Participants { get; set; }
+		public IList<GamePlayerDto> Players { get; set; }
 
 		public GameRoundDto CurrentRound { get; set; }
 

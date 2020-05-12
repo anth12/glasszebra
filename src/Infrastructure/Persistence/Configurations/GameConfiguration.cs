@@ -13,7 +13,7 @@ namespace CleanArchitecture.Infrastructure.Persistence.Configurations
                 .IsRequired();
 
             //builder.HasOne(t => t.Owner).WithOne(o=> o.Game);
-            //builder.HasMany(t => t.Participants).WithOne(o=> o.Game);
+            //builder.HasMany(t => t.Players).WithOne(o=> o.Game);
         }
     }
 }

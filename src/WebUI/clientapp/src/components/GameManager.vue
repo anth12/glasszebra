@@ -9,9 +9,10 @@
 
 <script lang="ts">
 import store from "@/store";
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Watch } from 'vue-property-decorator';
 import Lobby from '@/components/game/Lobby.vue'
-import { GameClient, IGameClient, ParticipantGameCommand } from '../client/api';
+import { GameClient, IGameClient, ParticipantGameCommand, GameDto } from '../client/api';
+
 
 const client: IGameClient = new GameClient('https://localhost:44312');
 
@@ -24,6 +25,13 @@ export default class GameManager extends Vue {
 
   get game() {
       return store.state.game;
+  }
+
+  @Watch('game')
+  onPropertyChanged(value: GameDto, oldValue: GameDto) {
+    if(value != null){
+      console.log('test');
+    }
   }
 
   exitGame(){

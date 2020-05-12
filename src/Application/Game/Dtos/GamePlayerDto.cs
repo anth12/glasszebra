@@ -4,13 +4,13 @@ using CleanArchitecture.Domain.Enums;
 
 namespace CleanArchitecture.Application.Game.Dtos
 {
-	public class GameParticipantDto : IMapFrom<GameParticipant>
+	public class GamePlayerDto : IMapFrom<GamePlayer>
 	{
 		public int Id { get; set; }
 
 		public string Name { get; set; }
 		
-		public ParticipantStatus Status { get; set; }
+		public PlayerStatus Status { get; set; }
 
 		public bool IsOwner { get; set; }
 

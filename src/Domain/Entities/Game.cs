@@ -21,7 +21,7 @@ namespace CleanArchitecture.Domain.Entities
 
 		public GameStatus Status { get; set; }
 		
-		public IList<GameParticipant> Participants { get; set; } = new List<GameParticipant>();
+		public IList<GamePlayer> Players { get; set; } = new List<GamePlayer>();
 
 		public GameRound CurrentRound { get; set; }
 

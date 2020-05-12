@@ -8,7 +8,7 @@
 		//Setup,
 
 		/// <summary>
-		/// Game is setup & waiting for participants to join the lobby
+		/// Game is setup & waiting for players to join the lobby
 		/// </summary>
 		Lobby,
 

@@ -26,7 +26,7 @@ namespace CleanArchitecture.Application.Game.Commands.CreateGame
 
 		public async Task<CreateGameResponse> Handle(CreateGameCommand request, CancellationToken cancellationToken)
 		{
-			var owner = new GameParticipant
+			var owner = new GamePlayer
 			{
 				Name = "Quiz Master",
 				IsOwner = true
@@ -41,7 +41,7 @@ namespace CleanArchitecture.Application.Game.Commands.CreateGame
 				Status = GameStatus.Lobby,
 			};
 
-			game.Participants.Add(owner);
+			game.Players.Add(owner);
 			
 			_context.Games.Add(game);
 			await _context.SaveChangesAsync(cancellationToken);
@@ -49,7 +49,7 @@ namespace CleanArchitecture.Application.Game.Commands.CreateGame
 			return new CreateGameResponse
 			{
 				GameClientId = game.ClientId,
-				ParticipantClientId = owner.ClientId
+				PlayerClientId = owner.ClientId
 			};
 		}
 	}

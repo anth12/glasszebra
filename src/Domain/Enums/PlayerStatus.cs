@@ -1,7 +1,7 @@
 ﻿
 namespace CleanArchitecture.Domain.Enums
 {
-	public enum ParticipantStatus
+	public enum PlayerStatus
 	{
 		Active = 1,
 

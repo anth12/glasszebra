@@ -8,7 +8,7 @@ namespace CleanArchitecture.Application.Common.Interfaces
     public interface IApplicationDbContext
     {
         DbSet<Domain.Entities.Game> Games { get; set; }
-        DbSet<GameParticipant> Participants { get; set; }
+        DbSet<GamePlayer> Players { get; set; }
         DbSet<GameRound> GameRounds { get; set; }
 
         DbSet<QuestionCategory> Categories { get; set; }

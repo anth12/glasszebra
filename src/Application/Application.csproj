@@ -22,6 +22,7 @@
   <ItemGroup>
     <Folder Include="Common\Mappings\" />
     <Folder Include="Doodle\" />
+    <Folder Include="Events\Public\" />
   </ItemGroup>
 
 </Project>
