@@ -15,7 +15,7 @@ namespace CleanArchitecture.Domain.Entities
 		
 		public Guid ClientId { get; set; }
 
-		public PlayerStatus Status { get; set; }
+		public PlayerStatus Status { get; set; } = PlayerStatus.Disconnected;
 
 		public bool IsOwner { get; set; }
 

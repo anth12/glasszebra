@@ -7,6 +7,7 @@ using CleanArchitecture.Application.Common.Interfaces;
 using CleanArchitecture.Application.Events;
 using CleanArchitecture.Domain.Enums;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace CleanArchitecture.Application.Game.Commands.UpdatePlayerStatus
 {
@@ -28,7 +29,10 @@ namespace CleanArchitecture.Application.Game.Commands.UpdatePlayerStatus
 
 		public async Task<Unit> Handle(UpdatePlayerStatusCommand request, CancellationToken cancellationToken)
 		{
-			var game = await _context.Games.FindByClientIdAsync(request.GameClientId);
+			var game = await _context.Games
+				.Include(g=> g.Players)
+				.FindByClientIdAsync(request.GameClientId);
+
 			var player = game.Players.FirstOrDefault(p => p.ClientId == request.PlayerClientId);
 
 			if(player == null)
@@ -41,7 +45,7 @@ namespace CleanArchitecture.Application.Game.Commands.UpdatePlayerStatus
 
 			await _context.SaveChangesAsync(cancellationToken);
 
-			var @event = new PlayerStatusUpdatedEvent(player.Status, game.Id, player.Id);
+			var @event = new PlayerUpdatedEvent(false, player.GameId, player.Id);
 			await _mediator.Publish(@event, cancellationToken);
 
 			return Unit.Value;

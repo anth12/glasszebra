@@ -8,6 +8,7 @@ using CleanArchitecture.Application.Game.Commands.UpdateGame;
 using CleanArchitecture.Application.Game.Commands.UpdatePlayerStatus;
 using CleanArchitecture.Application.Game.Dtos;
 using CleanArchitecture.Application.Game.Queries.GetGame;
+using CleanArchitecture.Application.Game.Queries.GetGameOptions;
 using CleanArchitecture.Domain.Enums;
 
 namespace CleanArchitecture.WebUI.Controllers
@@ -19,6 +20,12 @@ namespace CleanArchitecture.WebUI.Controllers
 	    {
 		    return await Mediator.Send(command);
 	    }
+
+        [HttpPost("[action]")]
+        public async Task<ActionResult<GetGameOptionsResponse>> Options()
+        {
+	        return await Mediator.Send(new GetGameOptionsQuery());
+        }
 
         [HttpGet("{clientId}")]
         public async Task<ActionResult<GameDto>> Get(Guid clientId)

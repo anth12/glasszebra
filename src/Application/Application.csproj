@@ -12,6 +12,7 @@
     <PackageReference Include="FluentValidation" Version="8.6.0" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="8.6.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0" />
   </ItemGroup>
 
@@ -22,7 +23,6 @@
   <ItemGroup>
     <Folder Include="Common\Mappings\" />
     <Folder Include="Doodle\" />
-    <Folder Include="Events\Public\" />
   </ItemGroup>
 
 </Project>

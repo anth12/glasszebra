@@ -14,8 +14,10 @@ using Microsoft.Extensions.Hosting;
 using NSwag;
 using NSwag.Generation.Processors.Security;
 using System.Linq;
+using System.Reflection;
 using CleanArchitecture.WebUI.Hubs;
 using Microsoft.AspNetCore.Cors.Infrastructure;
+using MediatR;
 
 namespace CleanArchitecture.WebUI
 {
@@ -37,6 +39,8 @@ namespace CleanArchitecture.WebUI
             services.AddScoped<ICurrentUserService, CurrentUserService>();
 
             services.AddHttpContextAccessor();
+
+            services.AddMediatR(Assembly.GetExecutingAssembly());
 
             services.AddHealthChecks()
                 .AddDbContextCheck<ApplicationDbContext>();

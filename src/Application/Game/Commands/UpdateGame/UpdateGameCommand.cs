@@ -50,7 +50,7 @@ namespace CleanArchitecture.Application.Game.Commands.UpdateGame
 			
 			await _context.SaveChangesAsync(cancellationToken);
 
-			var @event = new GameUpdatedEvent { GameId = game.Id };
+			var @event = new GameUpdatedEvent(game.Id);
 			await _mediator.Publish(@event, cancellationToken);
 
 			return Unit.Value;

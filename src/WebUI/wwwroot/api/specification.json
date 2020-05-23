@@ -69,6 +69,26 @@
         }
       }
     },
+    "/api/Game/Options": {
+      "post": {
+        "tags": [
+          "Game"
+        ],
+        "operationId": "Game_Options",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetGameOptionsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Game/{clientId}": {
       "get": {
         "tags": [
@@ -144,7 +164,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ParticipantGameCommand"
+                "$ref": "#/components/schemas/PlayerGameCommand"
               }
             }
           },
@@ -177,7 +197,7 @@
             "type": "string",
             "format": "guid"
           },
-          "participantClientId": {
+          "playerClientId": {
             "type": "string",
             "format": "guid"
           }
@@ -187,6 +207,65 @@
         "type": "object",
         "additionalProperties": false,
         "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "GetGameOptionsResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "maxQuestionsPerRound": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxNumberOfRounds": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "difficulty": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Difficulty"
+            }
+          },
+          "categories": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/QuestionCategoryDto"
+            }
+          }
+        }
+      },
+      "Difficulty": {
+        "type": "integer",
+        "description": "",
+        "x-enumFlags": true,
+        "x-enumNames": [
+          "Easy",
+          "Average",
+          "Hard",
+          "VeryHard"
+        ],
+        "enum": [
+          1,
+          2,
+          4,
+          8
+        ]
+      },
+      "QuestionCategoryDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
           "name": {
             "type": "string",
             "nullable": true
@@ -216,15 +295,15 @@
             "nullable": true,
             "oneOf": [
               {
-                "$ref": "#/components/schemas/GameParticipantDto"
+                "$ref": "#/components/schemas/GamePlayerDto"
               }
             ]
           },
-          "participants": {
+          "players": {
             "type": "array",
             "nullable": true,
             "items": {
-              "$ref": "#/components/schemas/GameParticipantDto"
+              "$ref": "#/components/schemas/GamePlayerDto"
             }
           },
           "currentRound": {
@@ -269,7 +348,7 @@
           2
         ]
       },
-      "GameParticipantDto": {
+      "GamePlayerDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -282,7 +361,7 @@
             "nullable": true
           },
           "status": {
-            "$ref": "#/components/schemas/ParticipantStatus"
+            "$ref": "#/components/schemas/PlayerStatus"
           },
           "isOwner": {
             "type": "boolean"
@@ -301,20 +380,18 @@
           }
         }
       },
-      "ParticipantStatus": {
+      "PlayerStatus": {
         "type": "integer",
         "description": "",
         "x-enumNames": [
-          "Active",
-          "Inactive",
+          "Connected",
           "Disconnected",
           "Left"
         ],
         "enum": [
           1,
           2,
-          4,
-          8
+          4
         ]
       },
       "GameRoundDto": {
@@ -410,37 +487,6 @@
           16
         ]
       },
-      "Difficulty": {
-        "type": "integer",
-        "description": "",
-        "x-enumFlags": true,
-        "x-enumNames": [
-          "Easy",
-          "Average",
-          "Hard",
-          "VeryHard"
-        ],
-        "enum": [
-          1,
-          2,
-          4,
-          8
-        ]
-      },
-      "QuestionCategoryDto": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          }
-        }
-      },
       "JoinGameResponse": {
         "type": "object",
         "additionalProperties": false,
@@ -457,15 +503,15 @@
               }
             ]
           },
-          "participantClientId": {
+          "playerClientId": {
             "type": "string",
             "format": "guid"
           },
-          "participant": {
+          "player": {
             "nullable": true,
             "oneOf": [
               {
-                "$ref": "#/components/schemas/GameParticipantDto"
+                "$ref": "#/components/schemas/GamePlayerDto"
               }
             ]
           }
@@ -474,7 +520,7 @@
       "UpdateGameCommand": {
         "allOf": [
           {
-            "$ref": "#/components/schemas/ParticipantGameCommand"
+            "$ref": "#/components/schemas/PlayerGameCommand"
           },
           {
             "type": "object",
@@ -507,7 +553,7 @@
           }
         ]
       },
-      "ParticipantGameCommand": {
+      "PlayerGameCommand": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -515,7 +561,7 @@
             "type": "string",
             "format": "guid"
           },
-          "participantClientId": {
+          "playerClientId": {
             "type": "string",
             "format": "guid"
           }

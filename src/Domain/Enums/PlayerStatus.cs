@@ -3,12 +3,10 @@ namespace CleanArchitecture.Domain.Enums
 {
 	public enum PlayerStatus
 	{
-		Active = 1,
+		Connected = 1,
+		
+		Disconnected = 1<<1,
 
-		Inactive = 1<<1,
-
-		Disconnected = 1<<2,
-
-		Left = 1<<3
+		Left = 1<<2
 	}
 }
