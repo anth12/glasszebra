@@ -27,6 +27,7 @@ namespace GlassZebra.Domain.Entities
 
 		public int QuestionsPerRound { get; set; }
 		public int NumberOfRounds { get; set; }
+
 		public Difficulty Difficulty { get; set; }
 		public IList<QuestionCategory> Categories { get; set; } = new List<QuestionCategory>();
 

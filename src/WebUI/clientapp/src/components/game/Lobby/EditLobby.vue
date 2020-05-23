@@ -6,6 +6,8 @@
         <h1>
           <input type="text" v-model="update.name" />
         </h1>
+        <Validation property="Name" />
+
         <p>Categories: 
             <button v-for="category in options.categories" :key="category.id">
                 <label>
@@ -24,20 +26,23 @@
                 </label>
             </button>
         </p>
+        <Validation property="Difficulty" />
 
         <div>
             <label>Number of Rounds
-                <input name="update.numberOfRounds" type="range" min="1" v-bind:max="options.maxNumberOfRounds" v-model="update.numberOfRounds">
+                <input name="update.numberOfRounds" type="range" min="1" v-bind:max="options.maxNumberOfRounds" v-model.number="update.numberOfRounds">
                 {{ update.numberOfRounds }}
             </label>
         </div>
+        <Validation property="NumberOfRounds" />
 
         <div>
             <label>Questions Per Round
-                <input name="update.questionsPerRound" type="range" min="5" step="5" v-bind:max="options.maxQuestionsPerRound" v-model="update.questionsPerRound">
+                <input name="update.questionsPerRound" type="range" min="5" step="5" v-bind:max="options.maxQuestionsPerRound" v-model.number="update.questionsPerRound">
                 {{ update.questionsPerRound }}
             </label>
         </div> 
+        <Validation property="QuestionsPerRound" />
 
       </div>
 
@@ -79,26 +84,21 @@ export default class EditLobby extends Vue {
 
   @Watch('update', { deep: true })
   onPropertyChanged() {
-      console.log('update')
-      if(!this.updateDefer)
+      
+      if(this.updateDefer)
         clearTimeout(this.updateDefer);      
   
       this.updateDefer = setTimeout(()=>{
           
         if(this.update != null){
-          
-            client.update(this.update).catch((e)=>{
-              
-              if(e instanceof ValidationException) {
-                store.dispatch('addValidation', e);
-              } else if(e instanceof NotFoundException) {
-                console.log(e);
-              } else {
-                console.log(e);
-              }
+          console.log(this.update.questionsPerRound)
+            client.update(this.update).then(()=>{              
+              store.dispatch('addValidation', null);
+            }).catch((e)=>{
+              store.dispatch('addValidation', e);              
             })
         }
-      }, 100);
+      }, 500);
   }
   
   mounted() {

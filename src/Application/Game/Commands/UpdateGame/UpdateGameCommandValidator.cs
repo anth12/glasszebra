@@ -6,6 +6,8 @@ namespace GlassZebra.Application.Game.Commands.UpdateGame
 	{
 		public UpdateGameCommandValidator()
 		{
+			CascadeMode = CascadeMode.StopOnFirstFailure;
+
 			RuleFor(v => v.Name)
 				.NotEmpty().WithMessage("Name must not be empty")
 				.Length(3, 55).WithMessage("Name must be between 3 & 55 characters");
@@ -22,7 +24,7 @@ namespace GlassZebra.Application.Game.Commands.UpdateGame
 				.NotEmpty();
 
 			RuleFor(v => v.Categories)
-				.NotEmpty()
+				.NotNull()
 				.Must(c=> c.Count <= 20)
 				.WithMessage("Categories cannot exceed 20")
 				.Must(c => c.Count > 0)

@@ -1,7 +1,5 @@
 <template>
     <div>
-        {{ property }}
-        {{ validation }}
       <p v-for="error in validation" :key="error" class="error">
           {{ error }}
       </p>

@@ -27,12 +27,12 @@ export default class GameManager extends Vue {
       return store.state.game;
   }
 
-  @Watch('game')
-  onPropertyChanged(value: GameDto, oldValue: GameDto) {
-    if(value != null){
-      console.log('test');
-    }
-  }
+  // @Watch('game')
+  // onPropertyChanged(value: GameDto, oldValue: GameDto) {
+  //   if(value != null){
+      
+  //   }
+  // }
 
   exitGame(){
     client.leave(new PlayerGameCommand({

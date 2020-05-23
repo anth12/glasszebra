@@ -35,7 +35,6 @@ export default new Vuex.Store({
 
     addValidation(state, errors) {
       state.validation = errors;
-      console.log(errors)
     },
 
     addGame(state, game: GameDto){
@@ -79,7 +78,8 @@ export default new Vuex.Store({
     },
 
     getValidationError: state => 
-    (property: string) => Object.prototype.hasOwnProperty.call(state.validation.hasOwnProperty, property)
+    (property: string) =>
+      Object.prototype.hasOwnProperty.call(state.validation, property)
       ? state.validation[property]
       : []
     
@@ -87,9 +87,11 @@ export default new Vuex.Store({
 
   actions: {
 
-    addValidation(context, validation: ValidationException){
-      if(validation.errors != null)
-        context.commit('addValidation', validation.errors);
+    addValidation(context, error){
+      if(error instanceof ValidationException && error.errors != null)
+        context.commit('addValidation', error.errors);
+      else
+        context.commit('addValidation', {});
     },
 
     clear(context){
