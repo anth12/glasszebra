@@ -1,7 +1,7 @@
 ﻿using System;
-using CleanArchitecture.Application.Game.Dtos;
+using GlassZebra.Application.Game.Dtos;
 
-namespace CleanArchitecture.Application.Game.Commands.JoinGame
+namespace GlassZebra.Application.Game.Commands.JoinGame
 {
 	public class JoinGameResponse
 	{

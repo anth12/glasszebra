@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using CleanArchitecture.Application.Common.Mappings;
-using CleanArchitecture.Domain.Enums;
+using GlassZebra.Application.Common.Mappings;
+using GlassZebra.Domain.Enums;
 
-namespace CleanArchitecture.Application.Game.Dtos
+namespace GlassZebra.Application.Game.Dtos
 {
 	public class GameDto : IMapFrom<Domain.Entities.Game>
 	{

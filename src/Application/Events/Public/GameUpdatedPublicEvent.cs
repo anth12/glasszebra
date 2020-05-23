@@ -1,6 +1,6 @@
-﻿using CleanArchitecture.Application.Game.Dtos;
+﻿using GlassZebra.Application.Game.Dtos;
 
-namespace CleanArchitecture.Application.Events.Public
+namespace GlassZebra.Application.Events.Public
 {
 	public class GameUpdatedPublicEvent : IPublicEvent
 	{

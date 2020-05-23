@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
-using CleanArchitecture.Application.Game.Commands.UpdatePlayerStatus;
-using CleanArchitecture.Application.Game.Dtos;
-using CleanArchitecture.Application.Game.Queries.GetGame;
-using CleanArchitecture.Domain.Enums;
+using GlassZebra.Application.Game.Commands.UpdatePlayerStatus;
+using GlassZebra.Application.Game.Dtos;
+using GlassZebra.Application.Game.Queries.GetGame;
+using GlassZebra.Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
 
-namespace CleanArchitecture.WebUI.Hubs
+namespace GlassZebra.WebUI.Hubs
 {
 	public class GameHub : Hub//, IGameHub
 	{

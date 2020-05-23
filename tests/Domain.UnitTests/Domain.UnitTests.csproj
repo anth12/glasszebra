@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>CleanArchitecture.Domain.UnitTests</RootNamespace>
-    <AssemblyName>CleanArchitecture.Domain.UnitTests</AssemblyName>
+    <RootNamespace>GlassZebra.Domain.UnitTests</RootNamespace>
+    <AssemblyName>GlassZebra.Domain.UnitTests</AssemblyName>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>

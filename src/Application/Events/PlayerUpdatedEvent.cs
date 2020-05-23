@@ -1,12 +1,12 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using CleanArchitecture.Application.Common.Interfaces;
-using CleanArchitecture.Application.Events.Public;
-using CleanArchitecture.Application.Game.Dtos;
+using GlassZebra.Application.Common.Interfaces;
+using GlassZebra.Application.Events.Public;
+using GlassZebra.Application.Game.Dtos;
 using MediatR;
 
-namespace CleanArchitecture.Application.Events
+namespace GlassZebra.Application.Events
 {
 	public class PlayerUpdatedEvent : INotification, IPublicEvent
 	{

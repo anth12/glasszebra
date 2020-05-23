@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CleanArchitecture.Application.Common.Interfaces;
+using GlassZebra.Application.Common.Interfaces;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
-namespace CleanArchitecture.Application.Game.Commands.UpdatePlayer
+namespace GlassZebra.Application.Game.Commands.UpdatePlayer
 {
 	public class UpdatePlayerCommandValidator : AbstractValidator<UpdatePlayerCommand>
 	{

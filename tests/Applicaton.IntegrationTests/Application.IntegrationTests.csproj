@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>CleanArchitecture.Application.IntegrationTests</RootNamespace>
-    <AssemblyName>CleanArchitecture.Application.IntegrationTests</AssemblyName>
+    <RootNamespace>GlassZebra.Application.IntegrationTests</RootNamespace>
+    <AssemblyName>GlassZebra.Application.IntegrationTests</AssemblyName>
     
     <IsPackable>false</IsPackable>
   </PropertyGroup>

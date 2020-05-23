@@ -1,7 +1,7 @@
-﻿using CleanArchitecture.Application.Common.Interfaces;
-using CleanArchitecture.Domain.Common;
-using CleanArchitecture.Domain.Entities;
-using CleanArchitecture.Infrastructure.Identity;
+﻿using GlassZebra.Application.Common.Interfaces;
+using GlassZebra.Domain.Common;
+using GlassZebra.Domain.Entities;
+using GlassZebra.Infrastructure.Identity;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +12,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CleanArchitecture.Infrastructure.Persistence
+namespace GlassZebra.Infrastructure.Persistence
 {
     public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, IApplicationDbContext
     {

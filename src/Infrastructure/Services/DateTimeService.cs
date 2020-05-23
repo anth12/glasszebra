@@ -1,7 +1,7 @@
-﻿using CleanArchitecture.Application.Common.Interfaces;
+﻿using GlassZebra.Application.Common.Interfaces;
 using System;
 
-namespace CleanArchitecture.Infrastructure.Services
+namespace GlassZebra.Infrastructure.Services
 {
     public class DateTimeService : IDateTime
     {

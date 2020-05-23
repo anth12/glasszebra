@@ -2,14 +2,14 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CleanArchitecture.Application.Common.Exceptions;
-using CleanArchitecture.Application.Common.Extensions;
-using CleanArchitecture.Application.Common.Interfaces;
-using CleanArchitecture.Application.Events;
-using CleanArchitecture.Domain.Enums;
+using GlassZebra.Application.Common.Exceptions;
+using GlassZebra.Application.Common.Extensions;
+using GlassZebra.Application.Common.Interfaces;
+using GlassZebra.Application.Events;
+using GlassZebra.Domain.Enums;
 using MediatR;
 
-namespace CleanArchitecture.Application.Game.Commands.UpdateGame
+namespace GlassZebra.Application.Game.Commands.UpdateGame
 {
 	public class UpdateGameCommand : PlayerGameCommand, IRequest
 	{

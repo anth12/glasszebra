@@ -4,13 +4,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using CleanArchitecture.Application.Common.Interfaces;
-using CleanArchitecture.Application.Game.Dtos;
-using CleanArchitecture.Domain.Enums;
+using GlassZebra.Application.Common.Interfaces;
+using GlassZebra.Application.Game.Dtos;
+using GlassZebra.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace CleanArchitecture.Application.Game.Queries.GetGameOptions
+namespace GlassZebra.Application.Game.Queries.GetGameOptions
 {
 	public class GetGameOptionsQuery : IRequest<GetGameOptionsResponse>
 	{

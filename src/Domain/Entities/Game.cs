@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using CleanArchitecture.Domain.Common;
-using CleanArchitecture.Domain.Enums;
+using GlassZebra.Domain.Common;
+using GlassZebra.Domain.Enums;
 
-namespace CleanArchitecture.Domain.Entities
+namespace GlassZebra.Domain.Entities
 {
 	public class Game : IHaveClientId
 	{

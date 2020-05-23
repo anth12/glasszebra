@@ -1,11 +1,11 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using CleanArchitecture.Application.Common.Interfaces;
-using CleanArchitecture.Domain.Enums;
+using GlassZebra.Application.Common.Interfaces;
+using GlassZebra.Domain.Enums;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
-namespace CleanArchitecture.Application.Game.Commands.JoinGame
+namespace GlassZebra.Application.Game.Commands.JoinGame
 {
 	public class UpdatePlayerCommandValidator : AbstractValidator<JoinGameCommand>
 	{

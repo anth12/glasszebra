@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using CleanArchitecture.Application.Common.Behaviours;
+using GlassZebra.Application.Common.Behaviours;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
-using CleanArchitecture.Application.Services.Game;
+using GlassZebra.Application.Services.Game;
 
-namespace CleanArchitecture.Application
+namespace GlassZebra.Application
 {
     public static class DependencyInjection
     {

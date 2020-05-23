@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using CleanArchitecture.Application.Common.Mappings;
-using CleanArchitecture.Domain.Entities;
+using GlassZebra.Application.Common.Mappings;
+using GlassZebra.Domain.Entities;
 using NUnit.Framework;
 using System;
-using CleanArchitecture.Application.Game.Dtos;
+using GlassZebra.Application.Game.Dtos;
 
-namespace CleanArchitecture.Application.UnitTests.Common.Mappings
+namespace GlassZebra.Application.UnitTests.Common.Mappings
 {
     public class MappingTests
     {

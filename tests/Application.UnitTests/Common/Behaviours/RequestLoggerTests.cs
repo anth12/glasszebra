@@ -1,13 +1,13 @@
-﻿using CleanArchitecture.Application.Common.Behaviours;
-using CleanArchitecture.Application.Common.Interfaces;
+﻿using GlassZebra.Application.Common.Behaviours;
+using GlassZebra.Application.Common.Interfaces;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using System.Threading;
 using System.Threading.Tasks;
-using CleanArchitecture.Application.Game.Commands.CreateGame;
+using GlassZebra.Application.Game.Commands.CreateGame;
 
-namespace CleanArchitecture.Application.UnitTests.Common.Behaviours
+namespace GlassZebra.Application.UnitTests.Common.Behaviours
 {
     public class RequestLoggerTests
     {

@@ -1,7 +1,7 @@
 ﻿using System;
-using CleanArchitecture.Domain.Enums;
+using GlassZebra.Domain.Enums;
 
-namespace CleanArchitecture.Application.Common.Exceptions
+namespace GlassZebra.Application.Common.Exceptions
 {
 	public class InvalidStatusException : Exception
 	{

@@ -1,11 +1,11 @@
-﻿using CleanArchitecture.Domain.Entities;
-using CleanArchitecture.Infrastructure.Identity;
+﻿using GlassZebra.Domain.Entities;
+using GlassZebra.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
 using System.Threading.Tasks;
-using CleanArchitecture.Domain.Enums;
+using GlassZebra.Domain.Enums;
 
-namespace CleanArchitecture.Infrastructure.Persistence
+namespace GlassZebra.Infrastructure.Persistence
 {
     public static class ApplicationDbContextSeed
     {

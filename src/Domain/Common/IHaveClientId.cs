@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CleanArchitecture.Domain.Common
+namespace GlassZebra.Domain.Common
 {
 	public interface IHaveClientId
 	{

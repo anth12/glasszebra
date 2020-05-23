@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.SpaServices;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace CleanArchitecture.WebUI
+namespace GlassZebra.WebUI
 {
     public static class VueHelper
     {

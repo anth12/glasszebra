@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using CleanArchitecture.Application.Common.Extensions;
-using CleanArchitecture.Application.Common.Interfaces;
-using CleanArchitecture.Application.Events;
+using GlassZebra.Application.Common.Extensions;
+using GlassZebra.Application.Common.Interfaces;
+using GlassZebra.Application.Events;
 using MediatR;
 
-namespace CleanArchitecture.Application.Game.Commands.UpdatePlayer
+namespace GlassZebra.Application.Game.Commands.UpdatePlayer
 {
 	public class UpdatePlayerCommand : IRequest
 	{

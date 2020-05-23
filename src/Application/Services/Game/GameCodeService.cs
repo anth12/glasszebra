@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using CleanArchitecture.Application.Common.Interfaces;
-using CleanArchitecture.Domain.Enums;
+using GlassZebra.Application.Common.Interfaces;
+using GlassZebra.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 
-namespace CleanArchitecture.Application.Services.Game
+namespace GlassZebra.Application.Services.Game
 {
 	internal class GameCodeService : IGameCodeService
 	{

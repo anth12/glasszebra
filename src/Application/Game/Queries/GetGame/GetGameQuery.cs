@@ -2,13 +2,13 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using CleanArchitecture.Application.Common.Extensions;
-using CleanArchitecture.Application.Common.Interfaces;
-using CleanArchitecture.Application.Game.Dtos;
+using GlassZebra.Application.Common.Extensions;
+using GlassZebra.Application.Common.Interfaces;
+using GlassZebra.Application.Game.Dtos;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace CleanArchitecture.Application.Game.Queries.GetGame
+namespace GlassZebra.Application.Game.Queries.GetGame
 {
 	public class GetGameQuery : IRequest<GameDto>
 	{

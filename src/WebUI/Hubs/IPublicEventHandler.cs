@@ -1,10 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using CleanArchitecture.Application.Events.Public;
+using GlassZebra.Application.Events.Public;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
 
-namespace CleanArchitecture.WebUI.Hubs
+namespace GlassZebra.WebUI.Hubs
 {
 	public class IPublicEventHandler : INotificationHandler<IPublicEvent>, 
 		INotificationHandler<GameUpdatedPublicEvent>,

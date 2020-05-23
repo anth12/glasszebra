@@ -1,8 +1,8 @@
-﻿using CleanArchitecture.Domain.Entities;
+﻿using GlassZebra.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace CleanArchitecture.Infrastructure.Persistence.Configurations
+namespace GlassZebra.Infrastructure.Persistence.Configurations
 {
     public class GamePlayerConfiguration : IEntityTypeConfiguration<GamePlayer>
     {

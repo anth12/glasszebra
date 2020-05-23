@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CleanArchitecture.Application.Game.Commands
+namespace GlassZebra.Application.Game.Commands
 {
 	public class PlayerGameCommand
 	{

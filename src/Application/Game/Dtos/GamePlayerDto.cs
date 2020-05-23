@@ -1,8 +1,8 @@
-﻿using CleanArchitecture.Application.Common.Mappings;
-using CleanArchitecture.Domain.Entities;
-using CleanArchitecture.Domain.Enums;
+﻿using GlassZebra.Application.Common.Mappings;
+using GlassZebra.Domain.Entities;
+using GlassZebra.Domain.Enums;
 
-namespace CleanArchitecture.Application.Game.Dtos
+namespace GlassZebra.Application.Game.Dtos
 {
 	public class GamePlayerDto : IMapFrom<GamePlayer>
 	{

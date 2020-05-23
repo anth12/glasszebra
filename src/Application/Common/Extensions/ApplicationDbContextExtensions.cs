@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using CleanArchitecture.Application.Common.Exceptions;
-using CleanArchitecture.Domain.Common;
+using GlassZebra.Application.Common.Exceptions;
+using GlassZebra.Domain.Common;
 using Microsoft.EntityFrameworkCore;
 
-namespace CleanArchitecture.Application.Common.Extensions
+namespace GlassZebra.Application.Common.Extensions
 {
 	public static class ApplicationDbContextExtensions
 	{

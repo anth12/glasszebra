@@ -1,9 +1,9 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using CleanArchitecture.Application.Common.Interfaces;
+using GlassZebra.Application.Common.Interfaces;
 using MediatR;
 
-namespace CleanArchitecture.Application.Events.Public
+namespace GlassZebra.Application.Events.Public
 {
 	public interface IPublicEvent : INotification
 	{

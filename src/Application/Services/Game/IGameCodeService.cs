@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace CleanArchitecture.Application.Services.Game
+namespace GlassZebra.Application.Services.Game
 {
 	public interface IGameCodeService
 	{

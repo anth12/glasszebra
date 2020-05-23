@@ -1,17 +1,17 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using CleanArchitecture.Application.Game.Commands;
-using CleanArchitecture.Application.Game.Commands.CreateGame;
-using CleanArchitecture.Application.Game.Commands.JoinGame;
-using CleanArchitecture.Application.Game.Commands.UpdateGame;
-using CleanArchitecture.Application.Game.Commands.UpdatePlayerStatus;
-using CleanArchitecture.Application.Game.Dtos;
-using CleanArchitecture.Application.Game.Queries.GetGame;
-using CleanArchitecture.Application.Game.Queries.GetGameOptions;
-using CleanArchitecture.Domain.Enums;
+using GlassZebra.Application.Game.Commands;
+using GlassZebra.Application.Game.Commands.CreateGame;
+using GlassZebra.Application.Game.Commands.JoinGame;
+using GlassZebra.Application.Game.Commands.UpdateGame;
+using GlassZebra.Application.Game.Commands.UpdatePlayerStatus;
+using GlassZebra.Application.Game.Dtos;
+using GlassZebra.Application.Game.Queries.GetGame;
+using GlassZebra.Application.Game.Queries.GetGameOptions;
+using GlassZebra.Domain.Enums;
 
-namespace CleanArchitecture.WebUI.Controllers
+namespace GlassZebra.WebUI.Controllers
 {
     public class GameController : ApiController
     {

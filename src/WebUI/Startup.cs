@@ -1,9 +1,9 @@
-using CleanArchitecture.Application;
-using CleanArchitecture.Application.Common.Interfaces;
-using CleanArchitecture.Infrastructure;
-using CleanArchitecture.Infrastructure.Persistence;
-using CleanArchitecture.WebUI.Filters;
-using CleanArchitecture.WebUI.Services;
+using GlassZebra.Application;
+using GlassZebra.Application.Common.Interfaces;
+using GlassZebra.Infrastructure;
+using GlassZebra.Infrastructure.Persistence;
+using GlassZebra.WebUI.Filters;
+using GlassZebra.WebUI.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -15,11 +15,11 @@ using NSwag;
 using NSwag.Generation.Processors.Security;
 using System.Linq;
 using System.Reflection;
-using CleanArchitecture.WebUI.Hubs;
+using GlassZebra.WebUI.Hubs;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using MediatR;
 
-namespace CleanArchitecture.WebUI
+namespace GlassZebra.WebUI
 {
     public class Startup
     {
@@ -80,7 +80,7 @@ namespace CleanArchitecture.WebUI
 
             services.AddOpenApiDocument(configure =>
             {
-                configure.Title = "CleanArchitecture API";
+                configure.Title = "GlassZebra API";
                 configure.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
                 {
                     Type = OpenApiSecuritySchemeType.ApiKey,

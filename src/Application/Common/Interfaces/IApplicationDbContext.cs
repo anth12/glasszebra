@@ -1,9 +1,9 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using CleanArchitecture.Domain.Entities;
+using GlassZebra.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace CleanArchitecture.Application.Common.Interfaces
+namespace GlassZebra.Application.Common.Interfaces
 {
     public interface IApplicationDbContext
     {

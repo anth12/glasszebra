@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>CleanArchitecture.Infrastructure</RootNamespace>
-    <AssemblyName>CleanArchitecture.Infrastructure</AssemblyName>
+    <RootNamespace>GlassZebra.Infrastructure</RootNamespace>
+    <AssemblyName>GlassZebra.Infrastructure</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

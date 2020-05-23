@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CleanArchitecture.Application.Services.Game
+namespace GlassZebra.Application.Services.Game
 {
 	internal class RandomNameService : IRandomNameService
 	{

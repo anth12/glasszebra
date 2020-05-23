@@ -1,12 +1,12 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using CleanArchitecture.Application.Common.Interfaces;
-using CleanArchitecture.Application.Services.Game;
-using CleanArchitecture.Domain.Entities;
-using CleanArchitecture.Domain.Enums;
+using GlassZebra.Application.Common.Interfaces;
+using GlassZebra.Application.Services.Game;
+using GlassZebra.Domain.Entities;
+using GlassZebra.Domain.Enums;
 using MediatR;
 
-namespace CleanArchitecture.Application.Game.Commands.CreateGame
+namespace GlassZebra.Application.Game.Commands.CreateGame
 {
 	public class CreateGameCommand : IRequest<CreateGameResponse>
 	{

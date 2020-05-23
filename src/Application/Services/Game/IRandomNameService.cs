@@ -1,4 +1,4 @@
-﻿namespace CleanArchitecture.Application.Services.Game
+﻿namespace GlassZebra.Application.Services.Game
 {
 	public interface IRandomNameService
 	{

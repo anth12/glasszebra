@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using CleanArchitecture.Domain.Enums;
+using GlassZebra.Domain.Enums;
 
-namespace CleanArchitecture.Domain.Entities
+namespace GlassZebra.Domain.Entities
 {
 	public class Question
 	{

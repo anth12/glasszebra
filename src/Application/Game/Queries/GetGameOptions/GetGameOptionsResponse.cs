@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using CleanArchitecture.Application.Game.Dtos;
-using CleanArchitecture.Domain.Enums;
+using GlassZebra.Application.Game.Dtos;
+using GlassZebra.Domain.Enums;
 
-namespace CleanArchitecture.Application.Game.Queries.GetGameOptions
+namespace GlassZebra.Application.Game.Queries.GetGameOptions
 {
 	public class GetGameOptionsResponse
 	{

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using CleanArchitecture.Application.Common.Models;
+using GlassZebra.Application.Common.Models;
 
-namespace CleanArchitecture.Application.Common.Interfaces
+namespace GlassZebra.Application.Common.Interfaces
 {
     public interface IIdentityService
     {

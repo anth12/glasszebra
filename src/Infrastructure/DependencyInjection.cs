@@ -1,13 +1,13 @@
-﻿using CleanArchitecture.Application.Common.Interfaces;
-using CleanArchitecture.Infrastructure.Identity;
-using CleanArchitecture.Infrastructure.Persistence;
-using CleanArchitecture.Infrastructure.Services;
+﻿using GlassZebra.Application.Common.Interfaces;
+using GlassZebra.Infrastructure.Identity;
+using GlassZebra.Infrastructure.Persistence;
+using GlassZebra.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CleanArchitecture.Infrastructure
+namespace GlassZebra.Infrastructure
 {
     public static class DependencyInjection
     {
@@ -16,7 +16,7 @@ namespace CleanArchitecture.Infrastructure
             if (configuration.GetValue<bool>("UseInMemoryDatabase"))
             {
                 services.AddDbContext<ApplicationDbContext>(options =>
-                    options.UseInMemoryDatabase("CleanArchitectureDb"));
+                    options.UseInMemoryDatabase("GlassZebraDb"));
             }
             else
             {

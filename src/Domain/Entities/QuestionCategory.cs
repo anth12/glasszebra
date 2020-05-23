@@ -1,5 +1,5 @@
 ﻿
-namespace CleanArchitecture.Domain.Entities
+namespace GlassZebra.Domain.Entities
 {
 	public class QuestionCategory
 	{

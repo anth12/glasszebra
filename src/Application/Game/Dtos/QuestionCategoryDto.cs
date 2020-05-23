@@ -1,7 +1,7 @@
-﻿using CleanArchitecture.Application.Common.Mappings;
-using CleanArchitecture.Domain.Entities;
+﻿using GlassZebra.Application.Common.Mappings;
+using GlassZebra.Domain.Entities;
 
-namespace CleanArchitecture.Application.Game.Dtos
+namespace GlassZebra.Application.Game.Dtos
 {
 	public class QuestionCategoryDto : IMapFrom<QuestionCategory>
 	{

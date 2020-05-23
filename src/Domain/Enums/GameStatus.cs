@@ -1,4 +1,4 @@
-﻿namespace CleanArchitecture.Domain.Enums
+﻿namespace GlassZebra.Domain.Enums
 {
 	public enum GameStatus
 	{

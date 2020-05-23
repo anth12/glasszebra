@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CleanArchitecture.Domain.Enums
+namespace GlassZebra.Domain.Enums
 {
 	[Flags]
 	public enum Difficulty

@@ -1,8 +1,8 @@
-﻿using CleanArchitecture.Application.Common.Models;
+﻿using GlassZebra.Application.Common.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
 
-namespace CleanArchitecture.Infrastructure.Identity
+namespace GlassZebra.Infrastructure.Identity
 {
     public static class IdentityResultExtensions
     {

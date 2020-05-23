@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CleanArchitecture.Application.Common.Interfaces
+namespace GlassZebra.Application.Common.Interfaces
 {
     public interface ICsvFileBuilder
     {
