@@ -10,9 +10,10 @@
 export interface IGameClient {
     create(command: CreateGameCommand): Promise<CreateGameResponse>;
     update(command: UpdateGameCommand): Promise<FileResponse>;
+    options(): Promise<GetGameOptionsResponse>;
     get(clientId: string): Promise<GameDto>;
     join(joinCode: string | null): Promise<JoinGameResponse>;
-    leave(command: ParticipantGameCommand): Promise<FileResponse>;
+    leave(command: PlayerGameCommand): Promise<FileResponse>;
 }
 
 export class GameClient implements IGameClient {
@@ -99,6 +100,40 @@ export class GameClient implements IGameClient {
         return Promise.resolve<FileResponse>(<any>null);
     }
 
+    options(): Promise<GetGameOptionsResponse> {
+        let url_ = this.baseUrl + "/api/Game/Options";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <RequestInit>{
+            method: "POST",
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processOptions(_response);
+        });
+    }
+
+    protected processOptions(response: Response): Promise<GetGameOptionsResponse> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetGameOptionsResponse.fromJS(resultData200);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<GetGameOptionsResponse>(<any>null);
+    }
+
     get(clientId: string): Promise<GameDto> {
         let url_ = this.baseUrl + "/api/Game/{clientId}";
         if (clientId === undefined || clientId === null)
@@ -173,7 +208,7 @@ export class GameClient implements IGameClient {
         return Promise.resolve<JoinGameResponse>(<any>null);
     }
 
-    leave(command: ParticipantGameCommand): Promise<FileResponse> {
+    leave(command: PlayerGameCommand): Promise<FileResponse> {
         let url_ = this.baseUrl + "/api/Game/Leave";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -212,7 +247,7 @@ export class GameClient implements IGameClient {
 
 export class CreateGameResponse implements ICreateGameResponse {
     gameClientId?: string;
-    participantClientId?: string;
+    playerClientId?: string;
 
     constructor(data?: ICreateGameResponse) {
         if (data) {
@@ -226,7 +261,7 @@ export class CreateGameResponse implements ICreateGameResponse {
     init(_data?: any) {
         if (_data) {
             this.gameClientId = _data["gameClientId"];
-            this.participantClientId = _data["participantClientId"];
+            this.playerClientId = _data["playerClientId"];
         }
     }
 
@@ -240,14 +275,14 @@ export class CreateGameResponse implements ICreateGameResponse {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["gameClientId"] = this.gameClientId;
-        data["participantClientId"] = this.participantClientId;
+        data["playerClientId"] = this.playerClientId;
         return data; 
     }
 }
 
 export interface ICreateGameResponse {
     gameClientId?: string;
-    participantClientId?: string;
+    playerClientId?: string;
 }
 
 export class CreateGameCommand implements ICreateGameCommand {
@@ -286,13 +321,124 @@ export interface ICreateGameCommand {
     name?: string | undefined;
 }
 
+export class GetGameOptionsResponse implements IGetGameOptionsResponse {
+    maxQuestionsPerRound?: number;
+    maxNumberOfRounds?: number;
+    difficulty?: Difficulty[] | undefined;
+    categories?: QuestionCategoryDto[] | undefined;
+
+    constructor(data?: IGetGameOptionsResponse) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.maxQuestionsPerRound = _data["maxQuestionsPerRound"];
+            this.maxNumberOfRounds = _data["maxNumberOfRounds"];
+            if (Array.isArray(_data["difficulty"])) {
+                this.difficulty = [] as any;
+                for (let item of _data["difficulty"])
+                    this.difficulty!.push(item);
+            }
+            if (Array.isArray(_data["categories"])) {
+                this.categories = [] as any;
+                for (let item of _data["categories"])
+                    this.categories!.push(QuestionCategoryDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): GetGameOptionsResponse {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetGameOptionsResponse();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["maxQuestionsPerRound"] = this.maxQuestionsPerRound;
+        data["maxNumberOfRounds"] = this.maxNumberOfRounds;
+        if (Array.isArray(this.difficulty)) {
+            data["difficulty"] = [];
+            for (let item of this.difficulty)
+                data["difficulty"].push(item);
+        }
+        if (Array.isArray(this.categories)) {
+            data["categories"] = [];
+            for (let item of this.categories)
+                data["categories"].push(item.toJSON());
+        }
+        return data; 
+    }
+}
+
+export interface IGetGameOptionsResponse {
+    maxQuestionsPerRound?: number;
+    maxNumberOfRounds?: number;
+    difficulty?: Difficulty[] | undefined;
+    categories?: QuestionCategoryDto[] | undefined;
+}
+
+export enum Difficulty {
+    Easy = 1,
+    Average = 2,
+    Hard = 4,
+    VeryHard = 8,
+}
+
+export class QuestionCategoryDto implements IQuestionCategoryDto {
+    id?: number;
+    name?: string | undefined;
+
+    constructor(data?: IQuestionCategoryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+        }
+    }
+
+    static fromJS(data: any): QuestionCategoryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new QuestionCategoryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        return data; 
+    }
+}
+
+export interface IQuestionCategoryDto {
+    id?: number;
+    name?: string | undefined;
+}
+
 export class GameDto implements IGameDto {
     id?: number;
     joinCode?: string | undefined;
     name?: string | undefined;
     status?: GameStatus;
-    owner?: GameParticipantDto | undefined;
-    participants?: GameParticipantDto[] | undefined;
+    owner?: GamePlayerDto | undefined;
+    players?: GamePlayerDto[] | undefined;
     currentRound?: GameRoundDto | undefined;
     questionsPerRound?: number;
     numberOfRounds?: number;
@@ -314,11 +460,11 @@ export class GameDto implements IGameDto {
             this.joinCode = _data["joinCode"];
             this.name = _data["name"];
             this.status = _data["status"];
-            this.owner = _data["owner"] ? GameParticipantDto.fromJS(_data["owner"]) : <any>undefined;
-            if (Array.isArray(_data["participants"])) {
-                this.participants = [] as any;
-                for (let item of _data["participants"])
-                    this.participants!.push(GameParticipantDto.fromJS(item));
+            this.owner = _data["owner"] ? GamePlayerDto.fromJS(_data["owner"]) : <any>undefined;
+            if (Array.isArray(_data["players"])) {
+                this.players = [] as any;
+                for (let item of _data["players"])
+                    this.players!.push(GamePlayerDto.fromJS(item));
             }
             this.currentRound = _data["currentRound"] ? GameRoundDto.fromJS(_data["currentRound"]) : <any>undefined;
             this.questionsPerRound = _data["questionsPerRound"];
@@ -346,10 +492,10 @@ export class GameDto implements IGameDto {
         data["name"] = this.name;
         data["status"] = this.status;
         data["owner"] = this.owner ? this.owner.toJSON() : <any>undefined;
-        if (Array.isArray(this.participants)) {
-            data["participants"] = [];
-            for (let item of this.participants)
-                data["participants"].push(item.toJSON());
+        if (Array.isArray(this.players)) {
+            data["players"] = [];
+            for (let item of this.players)
+                data["players"].push(item.toJSON());
         }
         data["currentRound"] = this.currentRound ? this.currentRound.toJSON() : <any>undefined;
         data["questionsPerRound"] = this.questionsPerRound;
@@ -369,8 +515,8 @@ export interface IGameDto {
     joinCode?: string | undefined;
     name?: string | undefined;
     status?: GameStatus;
-    owner?: GameParticipantDto | undefined;
-    participants?: GameParticipantDto[] | undefined;
+    owner?: GamePlayerDto | undefined;
+    players?: GamePlayerDto[] | undefined;
     currentRound?: GameRoundDto | undefined;
     questionsPerRound?: number;
     numberOfRounds?: number;
@@ -384,16 +530,16 @@ export enum GameStatus {
     Over = 2,
 }
 
-export class GameParticipantDto implements IGameParticipantDto {
+export class GamePlayerDto implements IGamePlayerDto {
     id?: number;
     name?: string | undefined;
-    status?: ParticipantStatus;
+    status?: PlayerStatus;
     isOwner?: boolean;
     image?: string | undefined;
     totalScore?: number;
     roundScore?: number;
 
-    constructor(data?: IGameParticipantDto) {
+    constructor(data?: IGamePlayerDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -414,9 +560,9 @@ export class GameParticipantDto implements IGameParticipantDto {
         }
     }
 
-    static fromJS(data: any): GameParticipantDto {
+    static fromJS(data: any): GamePlayerDto {
         data = typeof data === 'object' ? data : {};
-        let result = new GameParticipantDto();
+        let result = new GamePlayerDto();
         result.init(data);
         return result;
     }
@@ -434,21 +580,20 @@ export class GameParticipantDto implements IGameParticipantDto {
     }
 }
 
-export interface IGameParticipantDto {
+export interface IGamePlayerDto {
     id?: number;
     name?: string | undefined;
-    status?: ParticipantStatus;
+    status?: PlayerStatus;
     isOwner?: boolean;
     image?: string | undefined;
     totalScore?: number;
     roundScore?: number;
 }
 
-export enum ParticipantStatus {
-    Active = 1,
-    Inactive = 2,
-    Disconnected = 4,
-    Left = 8,
+export enum PlayerStatus {
+    Connected = 1,
+    Disconnected = 2,
+    Left = 4,
 }
 
 export class GameRoundDto implements IGameRoundDto {
@@ -588,58 +733,11 @@ export enum QuestionType {
     FreeTextDoodle = 16,
 }
 
-export enum Difficulty {
-    Easy = 1,
-    Average = 2,
-    Hard = 4,
-    VeryHard = 8,
-}
-
-export class QuestionCategoryDto implements IQuestionCategoryDto {
-    id?: number;
-    name?: string | undefined;
-
-    constructor(data?: IQuestionCategoryDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.name = _data["name"];
-        }
-    }
-
-    static fromJS(data: any): QuestionCategoryDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new QuestionCategoryDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["name"] = this.name;
-        return data; 
-    }
-}
-
-export interface IQuestionCategoryDto {
-    id?: number;
-    name?: string | undefined;
-}
-
 export class JoinGameResponse implements IJoinGameResponse {
     gameClientId?: string;
     game?: GameDto | undefined;
-    participantClientId?: string;
-    participant?: GameParticipantDto | undefined;
+    playerClientId?: string;
+    player?: GamePlayerDto | undefined;
 
     constructor(data?: IJoinGameResponse) {
         if (data) {
@@ -654,8 +752,8 @@ export class JoinGameResponse implements IJoinGameResponse {
         if (_data) {
             this.gameClientId = _data["gameClientId"];
             this.game = _data["game"] ? GameDto.fromJS(_data["game"]) : <any>undefined;
-            this.participantClientId = _data["participantClientId"];
-            this.participant = _data["participant"] ? GameParticipantDto.fromJS(_data["participant"]) : <any>undefined;
+            this.playerClientId = _data["playerClientId"];
+            this.player = _data["player"] ? GamePlayerDto.fromJS(_data["player"]) : <any>undefined;
         }
     }
 
@@ -670,8 +768,8 @@ export class JoinGameResponse implements IJoinGameResponse {
         data = typeof data === 'object' ? data : {};
         data["gameClientId"] = this.gameClientId;
         data["game"] = this.game ? this.game.toJSON() : <any>undefined;
-        data["participantClientId"] = this.participantClientId;
-        data["participant"] = this.participant ? this.participant.toJSON() : <any>undefined;
+        data["playerClientId"] = this.playerClientId;
+        data["player"] = this.player ? this.player.toJSON() : <any>undefined;
         return data; 
     }
 }
@@ -679,15 +777,15 @@ export class JoinGameResponse implements IJoinGameResponse {
 export interface IJoinGameResponse {
     gameClientId?: string;
     game?: GameDto | undefined;
-    participantClientId?: string;
-    participant?: GameParticipantDto | undefined;
+    playerClientId?: string;
+    player?: GamePlayerDto | undefined;
 }
 
-export class ParticipantGameCommand implements IParticipantGameCommand {
+export class PlayerGameCommand implements IPlayerGameCommand {
     gameClientId?: string;
-    participantClientId?: string;
+    playerClientId?: string;
 
-    constructor(data?: IParticipantGameCommand) {
+    constructor(data?: IPlayerGameCommand) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -699,13 +797,13 @@ export class ParticipantGameCommand implements IParticipantGameCommand {
     init(_data?: any) {
         if (_data) {
             this.gameClientId = _data["gameClientId"];
-            this.participantClientId = _data["participantClientId"];
+            this.playerClientId = _data["playerClientId"];
         }
     }
 
-    static fromJS(data: any): ParticipantGameCommand {
+    static fromJS(data: any): PlayerGameCommand {
         data = typeof data === 'object' ? data : {};
-        let result = new ParticipantGameCommand();
+        let result = new PlayerGameCommand();
         result.init(data);
         return result;
     }
@@ -713,17 +811,17 @@ export class ParticipantGameCommand implements IParticipantGameCommand {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["gameClientId"] = this.gameClientId;
-        data["participantClientId"] = this.participantClientId;
+        data["playerClientId"] = this.playerClientId;
         return data; 
     }
 }
 
-export interface IParticipantGameCommand {
+export interface IPlayerGameCommand {
     gameClientId?: string;
-    participantClientId?: string;
+    playerClientId?: string;
 }
 
-export class UpdateGameCommand extends ParticipantGameCommand implements IUpdateGameCommand {
+export class UpdateGameCommand extends PlayerGameCommand implements IUpdateGameCommand {
     name?: string | undefined;
     questionsPerRound?: number;
     numberOfRounds?: number;
@@ -772,7 +870,7 @@ export class UpdateGameCommand extends ParticipantGameCommand implements IUpdate
     }
 }
 
-export interface IUpdateGameCommand extends IParticipantGameCommand {
+export interface IUpdateGameCommand extends IPlayerGameCommand {
     name?: string | undefined;
     questionsPerRound?: number;
     numberOfRounds?: number;

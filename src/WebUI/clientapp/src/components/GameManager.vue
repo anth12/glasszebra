@@ -2,7 +2,8 @@
   <div>
     <button @click="exitGame">Exit</button>
 
-    {{ game }}
+    <!-- {{ game }} -->
+    
     <Lobby v-if="game.status == 0" />
   </div>
 </template>
@@ -11,10 +12,9 @@
 import store from "@/store";
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import Lobby from '@/components/game/Lobby.vue'
-import { GameClient, IGameClient, ParticipantGameCommand, GameDto } from '../client/api';
+import { client } from '../client/api-factory';
+import { PlayerGameCommand, GameDto } from '../client/api';
 
-
-const client: IGameClient = new GameClient('https://localhost:44312');
 
 @Component({
   components:{
@@ -35,14 +35,13 @@ export default class GameManager extends Vue {
   }
 
   exitGame(){
-    client.leave(new ParticipantGameCommand({
+    client.leave(new PlayerGameCommand({
       gameClientId: store.state.gameClientId,
-      participantClientId: store.state.participantClientId,
+      playerClientId: store.state.playerClientId,
     })).then(()=>{
       store.dispatch('clear');
     }).catch(e=>{
-      console.error('Failed to leave game');
-      console.error(e);
+      console.error('Failed to leave game', e);
     });
     
   }

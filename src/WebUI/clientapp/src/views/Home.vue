@@ -22,9 +22,7 @@ import store from "@/store";
 import JoinGame from '@/components/JoinGame.vue'
 import CreateGame from '@/components/CreateGame.vue'
 import GameManager from '@/components/GameManager.vue'
-import { GameClient } from '../client/api';
-
-const client = new GameClient('https://localhost:44312');
+import { client } from '../client/api-factory';
 
 @Component({
   name: 'Home',
@@ -57,7 +55,6 @@ export default class Home extends Vue {
       }).catch(response=>{
         console.error('Failed to load existing game');
         console.error(response);
-        alert(`Couldn't load game`);
 
       }).then(()=>{
         this.isLoading = false;

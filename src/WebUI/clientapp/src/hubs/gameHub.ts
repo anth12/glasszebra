@@ -1,5 +1,7 @@
 import * as signalR from "@microsoft/signalr";
-import { GameDto } from '@/client/api';
+import { GameDto, GamePlayerDto } from '@/client/api';
+import store from '@/store';
+import { GameUpdatedPublicEvent, PlayerUpdatedPublicEvent } from './eventModels';
 
 export class GameHub {
     connection: signalR.HubConnection;
@@ -12,15 +14,33 @@ export class GameHub {
 
     connect(){
 
+        console.log('connecting');
+        
         this.connection.start()
         .then(()=>{
-            this.send();
+
+            const gameClientId = store.state.gameClientId;
+            const playerClientId = store.state.playerClientId;
+            console.debug(`Connected. Subscribing with clientId: ${gameClientId}`);
+            this.connection.send("subscribe", gameClientId, playerClientId).then(() => {
+                console.debug('Sent subscribe');
+            });
         })
         .catch(err => console.log(err));
 
         this.connection.on("receiveMessage", (game: GameDto) => {
-            console.log('receeive');
+            console.debug('receeive');
             console.log(game);
+        });
+
+        this.connection.on("Notification", (type: string, message: string) => {
+            alert(`[${type}] ${message}`);
+        });
+
+        this.connection.on("PlayerUpdatedPublicEvent", (event: PlayerUpdatedPublicEvent) => {
+            console.debug('[Event] playerUpdatedPublicEvent', event);
+            
+            store.commit('updatePlayer', event.player);
         });
     }
 

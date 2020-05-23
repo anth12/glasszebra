@@ -1,12 +1,12 @@
 <template>
   <div>
-      {{ game }}
-
+      
       <h1>{{game.name}}</h1>
       <h2>Join code: {{game.joinCode}}</h2>
       <ul>
-        <li v-for="participant in game.participants" :key="participant.id">
-          {{participant.name}}
+        <li v-for="player in game.players" :key="player.id">
+          {{player.name}} - 
+          <PlayerStatus v-bind:status="player.status" />
         </li>
       </ul>
   </div>
@@ -15,8 +15,13 @@
 <script lang="ts">
 import store from "@/store";
 import { Component, Vue } from 'vue-property-decorator';
+import PlayerStatus from "@/components/player/Status.vue";
 
-@Component
+@Component({
+  components:{
+    PlayerStatus
+  }
+})
 export default class Lobby extends Vue {
   
   get game() {
