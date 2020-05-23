@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { client } from '../client/api-factory';
+import client from '../client/api-factory';
 import { CreateGameCommand } from '../client/api';
 import store from '../store';
 
@@ -21,11 +21,14 @@ export default class CreateGame extends Vue {
 
   createGame(): void{
 
+    store.commit('isLoading', true);
+
     client.create(new CreateGameCommand({
       name: this.newGameName
     })).then((response)=>{
       store.dispatch('addGameClientId', response.gameClientId);
       store.dispatch('addPlayerClientId', response.playerClientId);
+      store.dispatch('addPlayerId', response.playerId);
       
       client.get(response.gameClientId ?? '').then(game=>{
         store.dispatch('addGame', game);
@@ -33,7 +36,10 @@ export default class CreateGame extends Vue {
 
     }).catch((e)=>{
       console.log(e);
+    }).then(()=>{
+        store.commit('isLoading', false);
     })
+
   }
 
 }

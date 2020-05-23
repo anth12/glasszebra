@@ -8,6 +8,7 @@ using GlassZebra.Application.Common.Interfaces;
 using GlassZebra.Application.Events;
 using GlassZebra.Domain.Enums;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace GlassZebra.Application.Game.Commands.UpdateGame
 {
@@ -17,7 +18,7 @@ namespace GlassZebra.Application.Game.Commands.UpdateGame
 
 		public int QuestionsPerRound { get; set; }
 		public int NumberOfRounds { get; set; }
-		public Difficulty Difficulty { get; set; }
+		public Difficulty[] Difficulty { get; set; }
 
 		public IList<int> Categories { get; set; } = new List<int>();
 	}
@@ -35,17 +36,21 @@ namespace GlassZebra.Application.Game.Commands.UpdateGame
 
 		public async Task<Unit> Handle(UpdateGameCommand request, CancellationToken cancellationToken)
 		{
-			var game = await _context.Games.FindByClientIdAsync(request.GameClientId);
+			var game = await _context.Games
+				.Include(g=> g.Players)
+				.Include(g=> g.Categories)
+				.FindByClientIdAsync(request.GameClientId);
+
 			var player = game.Players.FirstOrDefault(p => p.ClientId == request.PlayerClientId);
 
-			if(player == null || player.IsOwner)
+			if(player == null || !player.IsOwner)
 				throw new UnauthorizedUpdateException(game.Id, request.PlayerClientId);
 
 			game.Name = request.Name;
 			game.QuestionsPerRound = request.QuestionsPerRound;
 			game.NumberOfRounds = request.NumberOfRounds;
 			game.QuestionsPerRound = request.QuestionsPerRound;
-			game.Difficulty = request.Difficulty;
+			game.Difficulty = request.Difficulty.Aggregate((c, d)=> c |= d);
 			game.Categories = _context.Categories.Where(c=> request.Categories.Contains(c.Id)).ToList();
 			
 			await _context.SaveChangesAsync(cancellationToken);

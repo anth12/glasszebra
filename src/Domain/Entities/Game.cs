@@ -11,7 +11,7 @@ namespace GlassZebra.Domain.Entities
 		{
 			ClientId = Guid.NewGuid();
 		}
-
+		
 		public int Id { get; set; }
 
 		public Guid ClientId { get; set; }
@@ -29,5 +29,8 @@ namespace GlassZebra.Domain.Entities
 		public int NumberOfRounds { get; set; }
 		public Difficulty Difficulty { get; set; }
 		public IList<QuestionCategory> Categories { get; set; } = new List<QuestionCategory>();
+
+		public const int MaxQuestionsPerRound = 50;
+		public const int MaxNumberOfRounds = 20;
 	}
 }

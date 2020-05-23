@@ -12,15 +12,21 @@ namespace GlassZebra.Application.Game.Commands.UpdateGame
 
 			RuleFor(v => v.QuestionsPerRound)
 				.GreaterThan(0).WithMessage("Each round must have at least 1 question")
-				.LessThan(100).WithMessage("Rounds cannot exceed 99 questions");
+				.LessThan(Domain.Entities.Game.MaxQuestionsPerRound).WithMessage("Rounds cannot exceed 99 questions");
 
 			RuleFor(v => v.NumberOfRounds)
 				.GreaterThan(0).WithMessage("You must have at least 1 round")
-				.LessThan(100).WithMessage("Games cannot exceed 99 rounds");
+				.LessThan(Domain.Entities.Game.MaxNumberOfRounds).WithMessage("Games cannot exceed 99 rounds");
+
+			RuleFor(v => v.Difficulty)
+				.NotEmpty();
 
 			RuleFor(v => v.Categories)
+				.NotEmpty()
 				.Must(c=> c.Count <= 20)
-				.WithMessage("Categories cannot exceed 20");
+				.WithMessage("Categories cannot exceed 20")
+				.Must(c => c.Count > 0)
+				.WithMessage("You need at least 1 Category"); ;
 		}
 	}
 }

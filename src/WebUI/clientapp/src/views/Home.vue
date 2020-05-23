@@ -9,7 +9,7 @@
       <GameManager v-if="hasActiveGame"/>
     </div>
 
-    <div v-if="isLoading">
+    <div class="loading-ui-block" v-if="isLoading">
       Loading...
     </div>
   </div>
@@ -22,7 +22,7 @@ import store from "@/store";
 import JoinGame from '@/components/JoinGame.vue'
 import CreateGame from '@/components/CreateGame.vue'
 import GameManager from '@/components/GameManager.vue'
-import { client } from '../client/api-factory';
+import client from '../client/api-factory';
 
 @Component({
   name: 'Home',
@@ -34,7 +34,9 @@ import { client } from '../client/api-factory';
 })
 export default class Home extends Vue {
   
-  isLoading = true;
+  get isLoading() {
+      return store.state.isLoading;
+  }
 
   get hasActiveGame() {
       return store.state.game != null;
@@ -44,7 +46,7 @@ export default class Home extends Vue {
 
     // Load existing game
     if(store.state.gameClientId == null) {
-      this.isLoading = false;
+      store.commit('isLoading', false);
       
     } else{
       console.log(`Loading existing game ${store.state.gameClientId}`);
@@ -57,9 +59,21 @@ export default class Home extends Vue {
         console.error(response);
 
       }).then(()=>{
-        this.isLoading = false;
+        store.commit('isLoading', false);
       });
     }
   }
 }
 </script>
+
+<style scoped>
+.loading-ui-block{
+  background:rgba(156, 94, 94, 0.2);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+}
+</style>

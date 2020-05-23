@@ -1,8 +1,11 @@
 <template>
   <div>
       
-      <h1>{{game.name}}</h1>
       <h2>Join code: {{game.joinCode}}</h2>
+
+      <EditLobby v-if="isGameOwner" />
+      <ViewLobby v-if="!isGameOwner" />
+      
       <ul>
         <li v-for="player in game.players" :key="player.id">
           {{player.name}} - 
@@ -16,9 +19,13 @@
 import store from "@/store";
 import { Component, Vue } from 'vue-property-decorator';
 import PlayerStatus from "@/components/player/Status.vue";
+import EditLobby from './Lobby/EditLobby.vue';
+import ViewLobby from './Lobby/ViewLobby.vue';
 
 @Component({
   components:{
+    EditLobby,
+    ViewLobby,
     PlayerStatus
   }
 })
@@ -26,6 +33,10 @@ export default class Lobby extends Vue {
   
   get game() {
       return store.state.game;
+  }
+
+  get isGameOwner() {
+      return store.getters.isGameOwner;
   }
 
 }

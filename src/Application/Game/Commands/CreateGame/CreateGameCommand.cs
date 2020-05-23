@@ -39,6 +39,9 @@ namespace GlassZebra.Application.Game.Commands.CreateGame
 				Name = request.Name ?? joinCode,
 				JoinCode = joinCode,
 				Status = GameStatus.Lobby,
+				QuestionsPerRound = 20,
+				NumberOfRounds = 5,
+				Difficulty = Difficulty.Easy | Difficulty.Average | Difficulty.Hard
 			};
 
 			game.Players.Add(owner);
@@ -46,10 +49,12 @@ namespace GlassZebra.Application.Game.Commands.CreateGame
 			_context.Games.Add(game);
 			await _context.SaveChangesAsync(cancellationToken);
 
+			
 			return new CreateGameResponse
 			{
 				GameClientId = game.ClientId,
-				PlayerClientId = owner.ClientId
+				PlayerClientId = owner.ClientId,
+				PlayerId = owner.Id
 			};
 		}
 	}

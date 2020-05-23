@@ -1,25 +1,42 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { GameDto, GamePlayerDto } from '../client/api'
+import { GameDto, GamePlayerDto, ValidationException } from '../client/api'
 import { GameHub } from '../hubs/gameHub';
 
 Vue.use(Vuex)
 
 export interface StoreState{
+
+  isLoading: boolean;
+  validation: { [key: string]: string[] };
+
   game: null | GameDto;
   gameClientId: string;
   playerClientId: string;
+  playerId: null | number;
 
   gameHub: GameHub;
 }
 
 export default new Vuex.Store({
   state: {
+    isLoading: true,
+    validation: {},
     game: null,
     gameClientId: localStorage.getItem('gameClientId'),
-    playerClientId: localStorage.getItem('playerClientId')
+    playerClientId: localStorage.getItem('playerClientId'),
+    playerId: parseInt(localStorage.getItem('playerId') || "-1")
   } as StoreState,
   mutations: {
+
+    isLoading(state, isLoading: boolean) {
+      state.isLoading = isLoading;
+    },
+
+    addValidation(state, errors) {
+      state.validation = errors;
+      console.log(errors)
+    },
 
     addGame(state, game: GameDto){
       state.game = game;
@@ -44,14 +61,42 @@ export default new Vuex.Store({
 
     addPlayerClientId(state, clientId: string) {
       state.playerClientId = clientId;
+    },
+
+    addPlayerId(state, playerId: number) {
+      state.playerId = playerId;
     }
+
   },
+
+  getters: {
+    isGameOwner(state: StoreState){
+      if(state.playerId == null || state.game == null || state.game.players == null) {
+        return false;
+      }
+
+      return state.game.players.filter(p=> p.isOwner && p.id == state.playerId).length == 1;
+    },
+
+    getValidationError: state => 
+    (property: string) => Object.prototype.hasOwnProperty.call(state.validation.hasOwnProperty, property)
+      ? state.validation[property]
+      : []
+    
+  },
+
   actions: {
+
+    addValidation(context, validation: ValidationException){
+      if(validation.errors != null)
+        context.commit('addValidation', validation.errors);
+    },
 
     clear(context){
       context.dispatch('addGame', null);
       context.dispatch('addGameClientId', null);
       context.dispatch('addPlayerClientId', null);
+      context.dispatch('addPlayerId', null);
     },
 
     addGame(context, game: GameDto){
@@ -63,8 +108,12 @@ export default new Vuex.Store({
       }
     },
 
-    addPlayer(context, game: GameDto){
+    updateGame(context, game: GameDto) {
       context.commit('addGame', game);
+    },
+
+    updatePlayer(context, player: GamePlayerDto){
+      context.commit('updatePlayer', player);
 
     },
 
@@ -76,6 +125,11 @@ export default new Vuex.Store({
     addPlayerClientId(context, clientId: string) {
       localStorage.setItem('playerClientId', clientId);
       context.commit('addPlayerClientId', clientId);
+    },
+
+    addPlayerId(context, playerId: null | number) {
+      localStorage.setItem('playerId', (playerId || 0).toString());
+      context.commit('addPlayerId', playerId);
     }
   },
   modules: {

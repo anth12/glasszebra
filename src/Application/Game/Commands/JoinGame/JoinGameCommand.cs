@@ -52,7 +52,8 @@ namespace GlassZebra.Application.Game.Commands.JoinGame
 			return new JoinGameResponse
 			{
 				GameClientId = game.ClientId,
-				PlayerClientId = player.ClientId
+				PlayerClientId = player.ClientId,
+				PlayerId = player.Id
 			};
 		}
 	}

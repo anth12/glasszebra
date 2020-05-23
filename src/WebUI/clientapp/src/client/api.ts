@@ -9,11 +9,11 @@
 
 export interface IGameClient {
     create(command: CreateGameCommand): Promise<CreateGameResponse>;
-    update(command: UpdateGameCommand): Promise<FileResponse>;
+    update(command: UpdateGameCommand): Promise<void>;
     options(): Promise<GetGameOptionsResponse>;
     get(clientId: string): Promise<GameDto>;
     join(joinCode: string | null): Promise<JoinGameResponse>;
-    leave(command: PlayerGameCommand): Promise<FileResponse>;
+    leave(command: PlayerGameCommand): Promise<void>;
 }
 
 export class GameClient implements IGameClient {
@@ -56,6 +56,20 @@ export class GameClient implements IGameClient {
             result200 = CreateGameResponse.fromJS(resultData200);
             return result200;
             });
+        } else if (status === 404) {
+            return response.text().then((_responseText) => {
+            let result404: any = null;
+            let resultData404 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result404 = NotFoundException.fromJS(resultData404);
+            return throwException("A server side error occurred.", status, _responseText, _headers, result404);
+            });
+        } else if (status === 400) {
+            return response.text().then((_responseText) => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result400 = ValidationException.fromJS(resultData400);
+            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
+            });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
@@ -64,7 +78,7 @@ export class GameClient implements IGameClient {
         return Promise.resolve<CreateGameResponse>(<any>null);
     }
 
-    update(command: UpdateGameCommand): Promise<FileResponse> {
+    update(command: UpdateGameCommand): Promise<void> {
         let url_ = this.baseUrl + "/api/Game";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -75,7 +89,6 @@ export class GameClient implements IGameClient {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
-                "Accept": "application/octet-stream"
             }
         };
 
@@ -84,20 +97,29 @@ export class GameClient implements IGameClient {
         });
     }
 
-    protected processUpdate(response: Response): Promise<FileResponse> {
+    protected processUpdate(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        if (status === 404) {
+            return response.text().then((_responseText) => {
+            let result404: any = null;
+            let resultData404 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result404 = NotFoundException.fromJS(resultData404);
+            return throwException("A server side error occurred.", status, _responseText, _headers, result404);
+            });
+        } else if (status === 400) {
+            return response.text().then((_responseText) => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result400 = ValidationException.fromJS(resultData400);
+            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
+            });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<FileResponse>(<any>null);
+        return Promise.resolve<void>(<any>null);
     }
 
     options(): Promise<GetGameOptionsResponse> {
@@ -125,6 +147,20 @@ export class GameClient implements IGameClient {
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = GetGameOptionsResponse.fromJS(resultData200);
             return result200;
+            });
+        } else if (status === 404) {
+            return response.text().then((_responseText) => {
+            let result404: any = null;
+            let resultData404 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result404 = NotFoundException.fromJS(resultData404);
+            return throwException("A server side error occurred.", status, _responseText, _headers, result404);
+            });
+        } else if (status === 400) {
+            return response.text().then((_responseText) => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result400 = ValidationException.fromJS(resultData400);
+            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
             });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
@@ -163,6 +199,20 @@ export class GameClient implements IGameClient {
             result200 = GameDto.fromJS(resultData200);
             return result200;
             });
+        } else if (status === 404) {
+            return response.text().then((_responseText) => {
+            let result404: any = null;
+            let resultData404 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result404 = NotFoundException.fromJS(resultData404);
+            return throwException("A server side error occurred.", status, _responseText, _headers, result404);
+            });
+        } else if (status === 400) {
+            return response.text().then((_responseText) => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result400 = ValidationException.fromJS(resultData400);
+            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
+            });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
@@ -200,6 +250,20 @@ export class GameClient implements IGameClient {
             result200 = JoinGameResponse.fromJS(resultData200);
             return result200;
             });
+        } else if (status === 404) {
+            return response.text().then((_responseText) => {
+            let result404: any = null;
+            let resultData404 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result404 = NotFoundException.fromJS(resultData404);
+            return throwException("A server side error occurred.", status, _responseText, _headers, result404);
+            });
+        } else if (status === 400) {
+            return response.text().then((_responseText) => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result400 = ValidationException.fromJS(resultData400);
+            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
+            });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
@@ -208,7 +272,7 @@ export class GameClient implements IGameClient {
         return Promise.resolve<JoinGameResponse>(<any>null);
     }
 
-    leave(command: PlayerGameCommand): Promise<FileResponse> {
+    leave(command: PlayerGameCommand): Promise<void> {
         let url_ = this.baseUrl + "/api/Game/Leave";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -219,7 +283,6 @@ export class GameClient implements IGameClient {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Accept": "application/octet-stream"
             }
         };
 
@@ -228,26 +291,36 @@ export class GameClient implements IGameClient {
         });
     }
 
-    protected processLeave(response: Response): Promise<FileResponse> {
+    protected processLeave(response: Response): Promise<void> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return response.blob().then(blob => { return { fileName: fileName, data: blob, status: status, headers: _headers }; });
+        if (status === 404) {
+            return response.text().then((_responseText) => {
+            let result404: any = null;
+            let resultData404 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result404 = NotFoundException.fromJS(resultData404);
+            return throwException("A server side error occurred.", status, _responseText, _headers, result404);
+            });
+        } else if (status === 400) {
+            return response.text().then((_responseText) => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result400 = ValidationException.fromJS(resultData400);
+            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
+            });
         } else if (status !== 200 && status !== 204) {
             return response.text().then((_responseText) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<FileResponse>(<any>null);
+        return Promise.resolve<void>(<any>null);
     }
 }
 
 export class CreateGameResponse implements ICreateGameResponse {
     gameClientId?: string;
     playerClientId?: string;
+    playerId?: number;
 
     constructor(data?: ICreateGameResponse) {
         if (data) {
@@ -262,6 +335,7 @@ export class CreateGameResponse implements ICreateGameResponse {
         if (_data) {
             this.gameClientId = _data["gameClientId"];
             this.playerClientId = _data["playerClientId"];
+            this.playerId = _data["playerId"];
         }
     }
 
@@ -276,6 +350,7 @@ export class CreateGameResponse implements ICreateGameResponse {
         data = typeof data === 'object' ? data : {};
         data["gameClientId"] = this.gameClientId;
         data["playerClientId"] = this.playerClientId;
+        data["playerId"] = this.playerId;
         return data; 
     }
 }
@@ -283,6 +358,127 @@ export class CreateGameResponse implements ICreateGameResponse {
 export interface ICreateGameResponse {
     gameClientId?: string;
     playerClientId?: string;
+    playerId?: number;
+}
+
+export class Exception implements IException {
+    stackTrace?: string | undefined;
+    message?: string;
+    innerException?: Exception | undefined;
+    source?: string | undefined;
+
+    constructor(data?: IException) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.stackTrace = _data["StackTrace"];
+            this.message = _data["Message"];
+            this.innerException = _data["InnerException"] ? Exception.fromJS(_data["InnerException"]) : <any>undefined;
+            this.source = _data["Source"];
+        }
+    }
+
+    static fromJS(data: any): Exception {
+        data = typeof data === 'object' ? data : {};
+        let result = new Exception();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["StackTrace"] = this.stackTrace;
+        data["Message"] = this.message;
+        data["InnerException"] = this.innerException ? this.innerException.toJSON() : <any>undefined;
+        data["Source"] = this.source;
+        return data; 
+    }
+}
+
+export interface IException {
+    stackTrace?: string | undefined;
+    message?: string;
+    innerException?: Exception | undefined;
+    source?: string | undefined;
+}
+
+export class NotFoundException extends Exception implements INotFoundException {
+
+    constructor(data?: INotFoundException) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+    }
+
+    static fromJS(data: any): NotFoundException {
+        data = typeof data === 'object' ? data : {};
+        let result = new NotFoundException();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        super.toJSON(data);
+        return data; 
+    }
+}
+
+export interface INotFoundException extends IException {
+}
+
+export class ValidationException extends Exception implements IValidationException {
+    errors?: { [key: string]: string[]; } | undefined;
+
+    constructor(data?: IValidationException) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            if (_data["errors"]) {
+                this.errors = {} as any;
+                for (let key in _data["errors"]) {
+                    if (_data["errors"].hasOwnProperty(key))
+                        this.errors![key] = _data["errors"][key] !== undefined ? _data["errors"][key] : [];
+                }
+            }
+        }
+    }
+
+    static fromJS(data: any): ValidationException {
+        data = typeof data === 'object' ? data : {};
+        let result = new ValidationException();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (this.errors) {
+            data["errors"] = {};
+            for (let key in this.errors) {
+                if (this.errors.hasOwnProperty(key))
+                    data["errors"][key] = this.errors[key];
+            }
+        }
+        super.toJSON(data);
+        return data; 
+    }
+}
+
+export interface IValidationException extends IException {
+    errors?: { [key: string]: string[]; } | undefined;
 }
 
 export class CreateGameCommand implements ICreateGameCommand {
@@ -324,7 +520,7 @@ export interface ICreateGameCommand {
 export class GetGameOptionsResponse implements IGetGameOptionsResponse {
     maxQuestionsPerRound?: number;
     maxNumberOfRounds?: number;
-    difficulty?: Difficulty[] | undefined;
+    difficulty?: { [key: string]: number; } | undefined;
     categories?: QuestionCategoryDto[] | undefined;
 
     constructor(data?: IGetGameOptionsResponse) {
@@ -340,10 +536,12 @@ export class GetGameOptionsResponse implements IGetGameOptionsResponse {
         if (_data) {
             this.maxQuestionsPerRound = _data["maxQuestionsPerRound"];
             this.maxNumberOfRounds = _data["maxNumberOfRounds"];
-            if (Array.isArray(_data["difficulty"])) {
-                this.difficulty = [] as any;
-                for (let item of _data["difficulty"])
-                    this.difficulty!.push(item);
+            if (_data["difficulty"]) {
+                this.difficulty = {} as any;
+                for (let key in _data["difficulty"]) {
+                    if (_data["difficulty"].hasOwnProperty(key))
+                        this.difficulty![key] = _data["difficulty"][key];
+                }
             }
             if (Array.isArray(_data["categories"])) {
                 this.categories = [] as any;
@@ -364,10 +562,12 @@ export class GetGameOptionsResponse implements IGetGameOptionsResponse {
         data = typeof data === 'object' ? data : {};
         data["maxQuestionsPerRound"] = this.maxQuestionsPerRound;
         data["maxNumberOfRounds"] = this.maxNumberOfRounds;
-        if (Array.isArray(this.difficulty)) {
-            data["difficulty"] = [];
-            for (let item of this.difficulty)
-                data["difficulty"].push(item);
+        if (this.difficulty) {
+            data["difficulty"] = {};
+            for (let key in this.difficulty) {
+                if (this.difficulty.hasOwnProperty(key))
+                    data["difficulty"][key] = this.difficulty[key];
+            }
         }
         if (Array.isArray(this.categories)) {
             data["categories"] = [];
@@ -381,15 +581,8 @@ export class GetGameOptionsResponse implements IGetGameOptionsResponse {
 export interface IGetGameOptionsResponse {
     maxQuestionsPerRound?: number;
     maxNumberOfRounds?: number;
-    difficulty?: Difficulty[] | undefined;
+    difficulty?: { [key: string]: number; } | undefined;
     categories?: QuestionCategoryDto[] | undefined;
-}
-
-export enum Difficulty {
-    Easy = 1,
-    Average = 2,
-    Hard = 4,
-    VeryHard = 8,
 }
 
 export class QuestionCategoryDto implements IQuestionCategoryDto {
@@ -437,12 +630,11 @@ export class GameDto implements IGameDto {
     joinCode?: string | undefined;
     name?: string | undefined;
     status?: GameStatus;
-    owner?: GamePlayerDto | undefined;
     players?: GamePlayerDto[] | undefined;
     currentRound?: GameRoundDto | undefined;
     questionsPerRound?: number;
     numberOfRounds?: number;
-    difficulty?: Difficulty;
+    difficulty?: Difficulty[] | undefined;
     categories?: QuestionCategoryDto[] | undefined;
 
     constructor(data?: IGameDto) {
@@ -460,7 +652,6 @@ export class GameDto implements IGameDto {
             this.joinCode = _data["joinCode"];
             this.name = _data["name"];
             this.status = _data["status"];
-            this.owner = _data["owner"] ? GamePlayerDto.fromJS(_data["owner"]) : <any>undefined;
             if (Array.isArray(_data["players"])) {
                 this.players = [] as any;
                 for (let item of _data["players"])
@@ -469,7 +660,11 @@ export class GameDto implements IGameDto {
             this.currentRound = _data["currentRound"] ? GameRoundDto.fromJS(_data["currentRound"]) : <any>undefined;
             this.questionsPerRound = _data["questionsPerRound"];
             this.numberOfRounds = _data["numberOfRounds"];
-            this.difficulty = _data["difficulty"];
+            if (Array.isArray(_data["difficulty"])) {
+                this.difficulty = [] as any;
+                for (let item of _data["difficulty"])
+                    this.difficulty!.push(item);
+            }
             if (Array.isArray(_data["categories"])) {
                 this.categories = [] as any;
                 for (let item of _data["categories"])
@@ -491,7 +686,6 @@ export class GameDto implements IGameDto {
         data["joinCode"] = this.joinCode;
         data["name"] = this.name;
         data["status"] = this.status;
-        data["owner"] = this.owner ? this.owner.toJSON() : <any>undefined;
         if (Array.isArray(this.players)) {
             data["players"] = [];
             for (let item of this.players)
@@ -500,7 +694,11 @@ export class GameDto implements IGameDto {
         data["currentRound"] = this.currentRound ? this.currentRound.toJSON() : <any>undefined;
         data["questionsPerRound"] = this.questionsPerRound;
         data["numberOfRounds"] = this.numberOfRounds;
-        data["difficulty"] = this.difficulty;
+        if (Array.isArray(this.difficulty)) {
+            data["difficulty"] = [];
+            for (let item of this.difficulty)
+                data["difficulty"].push(item);
+        }
         if (Array.isArray(this.categories)) {
             data["categories"] = [];
             for (let item of this.categories)
@@ -515,12 +713,11 @@ export interface IGameDto {
     joinCode?: string | undefined;
     name?: string | undefined;
     status?: GameStatus;
-    owner?: GamePlayerDto | undefined;
     players?: GamePlayerDto[] | undefined;
     currentRound?: GameRoundDto | undefined;
     questionsPerRound?: number;
     numberOfRounds?: number;
-    difficulty?: Difficulty;
+    difficulty?: Difficulty[] | undefined;
     categories?: QuestionCategoryDto[] | undefined;
 }
 
@@ -733,11 +930,17 @@ export enum QuestionType {
     FreeTextDoodle = 16,
 }
 
+export enum Difficulty {
+    Easy = 1,
+    Average = 2,
+    Hard = 4,
+    VeryHard = 8,
+}
+
 export class JoinGameResponse implements IJoinGameResponse {
     gameClientId?: string;
-    game?: GameDto | undefined;
     playerClientId?: string;
-    player?: GamePlayerDto | undefined;
+    playerId?: number;
 
     constructor(data?: IJoinGameResponse) {
         if (data) {
@@ -751,9 +954,8 @@ export class JoinGameResponse implements IJoinGameResponse {
     init(_data?: any) {
         if (_data) {
             this.gameClientId = _data["gameClientId"];
-            this.game = _data["game"] ? GameDto.fromJS(_data["game"]) : <any>undefined;
             this.playerClientId = _data["playerClientId"];
-            this.player = _data["player"] ? GamePlayerDto.fromJS(_data["player"]) : <any>undefined;
+            this.playerId = _data["playerId"];
         }
     }
 
@@ -767,18 +969,16 @@ export class JoinGameResponse implements IJoinGameResponse {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["gameClientId"] = this.gameClientId;
-        data["game"] = this.game ? this.game.toJSON() : <any>undefined;
         data["playerClientId"] = this.playerClientId;
-        data["player"] = this.player ? this.player.toJSON() : <any>undefined;
+        data["playerId"] = this.playerId;
         return data; 
     }
 }
 
 export interface IJoinGameResponse {
     gameClientId?: string;
-    game?: GameDto | undefined;
     playerClientId?: string;
-    player?: GamePlayerDto | undefined;
+    playerId?: number;
 }
 
 export class PlayerGameCommand implements IPlayerGameCommand {
@@ -825,7 +1025,7 @@ export class UpdateGameCommand extends PlayerGameCommand implements IUpdateGameC
     name?: string | undefined;
     questionsPerRound?: number;
     numberOfRounds?: number;
-    difficulty?: Difficulty;
+    difficulty?: Difficulty[] | undefined;
     categories?: number[] | undefined;
 
     constructor(data?: IUpdateGameCommand) {
@@ -838,7 +1038,11 @@ export class UpdateGameCommand extends PlayerGameCommand implements IUpdateGameC
             this.name = _data["name"];
             this.questionsPerRound = _data["questionsPerRound"];
             this.numberOfRounds = _data["numberOfRounds"];
-            this.difficulty = _data["difficulty"];
+            if (Array.isArray(_data["difficulty"])) {
+                this.difficulty = [] as any;
+                for (let item of _data["difficulty"])
+                    this.difficulty!.push(item);
+            }
             if (Array.isArray(_data["categories"])) {
                 this.categories = [] as any;
                 for (let item of _data["categories"])
@@ -859,7 +1063,11 @@ export class UpdateGameCommand extends PlayerGameCommand implements IUpdateGameC
         data["name"] = this.name;
         data["questionsPerRound"] = this.questionsPerRound;
         data["numberOfRounds"] = this.numberOfRounds;
-        data["difficulty"] = this.difficulty;
+        if (Array.isArray(this.difficulty)) {
+            data["difficulty"] = [];
+            for (let item of this.difficulty)
+                data["difficulty"].push(item);
+        }
         if (Array.isArray(this.categories)) {
             data["categories"] = [];
             for (let item of this.categories)
@@ -874,15 +1082,8 @@ export interface IUpdateGameCommand extends IPlayerGameCommand {
     name?: string | undefined;
     questionsPerRound?: number;
     numberOfRounds?: number;
-    difficulty?: Difficulty;
+    difficulty?: Difficulty[] | undefined;
     categories?: number[] | undefined;
-}
-
-export interface FileResponse {
-    data: Blob;
-    status: number;
-    fileName?: string;
-    headers?: { [name: string]: any };
 }
 
 export class ApiException extends Error {

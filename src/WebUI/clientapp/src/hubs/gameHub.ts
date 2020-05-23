@@ -40,7 +40,13 @@ export class GameHub {
         this.connection.on("PlayerUpdatedPublicEvent", (event: PlayerUpdatedPublicEvent) => {
             console.debug('[Event] playerUpdatedPublicEvent', event);
             
-            store.commit('updatePlayer', event.player);
+            store.dispatch('updatePlayer', event.player);
+        });
+
+        this.connection.on("GameUpdatedPublicEvent", (event: GameUpdatedPublicEvent) => {
+            console.debug('[Event] gameUpdatedPublicEvent', event);
+            
+            store.dispatch('updateGame', event.game);
         });
     }
 

@@ -34,6 +34,26 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundException"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationException"
+                }
+              }
+            }
           }
         }
       },
@@ -55,13 +75,22 @@
           "x-position": 1
         },
         "responses": {
-          "200": {
+          "404": {
             "description": "",
             "content": {
-              "application/octet-stream": {
+              "application/json": {
                 "schema": {
-                  "type": "string",
-                  "format": "binary"
+                  "$ref": "#/components/schemas/NotFoundException"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationException"
                 }
               }
             }
@@ -82,6 +111,26 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/GetGameOptionsResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundException"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationException"
                 }
               }
             }
@@ -117,6 +166,26 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundException"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationException"
+                }
+              }
+            }
           }
         }
       }
@@ -149,6 +218,26 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundException"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationException"
+                }
+              }
+            }
           }
         }
       }
@@ -172,13 +261,22 @@
           "x-position": 1
         },
         "responses": {
-          "200": {
+          "404": {
             "description": "",
             "content": {
-              "application/octet-stream": {
+              "application/json": {
                 "schema": {
-                  "type": "string",
-                  "format": "binary"
+                  "$ref": "#/components/schemas/NotFoundException"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationException"
                 }
               }
             }
@@ -200,8 +298,71 @@
           "playerClientId": {
             "type": "string",
             "format": "guid"
+          },
+          "playerId": {
+            "type": "integer",
+            "format": "int32"
           }
         }
+      },
+      "NotFoundException": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Exception"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false
+          }
+        ]
+      },
+      "Exception": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "StackTrace": {
+            "type": "string",
+            "nullable": true
+          },
+          "Message": {
+            "type": "string"
+          },
+          "InnerException": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Exception"
+              }
+            ]
+          },
+          "Source": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "ValidationException": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Exception"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "errors": {
+                "type": "object",
+                "nullable": true,
+                "additionalProperties": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ]
       },
       "CreateGameCommand": {
         "type": "object",
@@ -226,10 +387,11 @@
             "format": "int32"
           },
           "difficulty": {
-            "type": "array",
+            "type": "object",
             "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/Difficulty"
+            "additionalProperties": {
+              "type": "integer",
+              "format": "int32"
             }
           },
           "categories": {
@@ -240,23 +402,6 @@
             }
           }
         }
-      },
-      "Difficulty": {
-        "type": "integer",
-        "description": "",
-        "x-enumFlags": true,
-        "x-enumNames": [
-          "Easy",
-          "Average",
-          "Hard",
-          "VeryHard"
-        ],
-        "enum": [
-          1,
-          2,
-          4,
-          8
-        ]
       },
       "QuestionCategoryDto": {
         "type": "object",
@@ -291,14 +436,6 @@
           "status": {
             "$ref": "#/components/schemas/GameStatus"
           },
-          "owner": {
-            "nullable": true,
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/GamePlayerDto"
-              }
-            ]
-          },
           "players": {
             "type": "array",
             "nullable": true,
@@ -323,7 +460,11 @@
             "format": "int32"
           },
           "difficulty": {
-            "$ref": "#/components/schemas/Difficulty"
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Difficulty"
+            }
           },
           "categories": {
             "type": "array",
@@ -487,6 +628,23 @@
           16
         ]
       },
+      "Difficulty": {
+        "type": "integer",
+        "description": "",
+        "x-enumFlags": true,
+        "x-enumNames": [
+          "Easy",
+          "Average",
+          "Hard",
+          "VeryHard"
+        ],
+        "enum": [
+          1,
+          2,
+          4,
+          8
+        ]
+      },
       "JoinGameResponse": {
         "type": "object",
         "additionalProperties": false,
@@ -495,25 +653,13 @@
             "type": "string",
             "format": "guid"
           },
-          "game": {
-            "nullable": true,
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/GameDto"
-              }
-            ]
-          },
           "playerClientId": {
             "type": "string",
             "format": "guid"
           },
-          "player": {
-            "nullable": true,
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/GamePlayerDto"
-              }
-            ]
+          "playerId": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },
@@ -539,7 +685,11 @@
                 "format": "int32"
               },
               "difficulty": {
-                "$ref": "#/components/schemas/Difficulty"
+                "type": "array",
+                "nullable": true,
+                "items": {
+                  "$ref": "#/components/schemas/Difficulty"
+                }
               },
               "categories": {
                 "type": "array",

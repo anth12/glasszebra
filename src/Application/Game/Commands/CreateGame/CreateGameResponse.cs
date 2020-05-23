@@ -6,5 +6,6 @@ namespace GlassZebra.Application.Game.Commands.CreateGame
 	{
 		public Guid GameClientId { get; set; }
 		public Guid PlayerClientId { get; set; }
+		public int PlayerId { get; set; }
 	}
 }

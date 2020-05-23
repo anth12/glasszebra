@@ -12,7 +12,7 @@
 import store from "@/store";
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import Lobby from '@/components/game/Lobby.vue'
-import { client } from '../client/api-factory';
+import client from '../client/api-factory';
 import { PlayerGameCommand, GameDto } from '../client/api';
 
 

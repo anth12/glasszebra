@@ -11,7 +11,7 @@
 <script lang="ts">
 import store from "@/store";
 import { Component, Vue } from 'vue-property-decorator';
-import { client } from '../client/api-factory';
+import client from '../client/api-factory';
 
 @Component
 export default class JoinGame extends Vue {
@@ -22,6 +22,7 @@ export default class JoinGame extends Vue {
     client.join(this.joinCode).then(response =>{
       store.dispatch('addGameClientId', response.gameClientId);
       store.dispatch('addPlayerClientId', response.playerClientId);
+      store.dispatch('addPlayerId', response.playerId);
       
       client.get(response.gameClientId ?? '').then(game=>{
         store.dispatch('addGame', game);

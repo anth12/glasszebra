@@ -35,9 +35,9 @@ namespace GlassZebra.Application.Game.Queries.GetGameOptions
 
 			return new GetGameOptionsResponse
 			{
-				Difficulty = Enum.GetValues(typeof(Difficulty)).Cast<Difficulty>().ToArray(),
-				MaxNumberOfRounds = 100,
-				MaxQuestionsPerRound = 100,
+				Difficulty = Enum.GetValues(typeof(Difficulty)).Cast<Difficulty>().ToDictionary(x=> x.ToString(), x=> (int)x),
+				MaxNumberOfRounds = Domain.Entities.Game.MaxNumberOfRounds,
+				MaxQuestionsPerRound = Domain.Entities.Game.MaxQuestionsPerRound,
 				Categories = categories
 			};
 		}

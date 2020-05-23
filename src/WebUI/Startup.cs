@@ -7,7 +7,6 @@ using GlassZebra.WebUI.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SpaServices.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -16,7 +15,6 @@ using NSwag.Generation.Processors.Security;
 using System.Linq;
 using System.Reflection;
 using GlassZebra.WebUI.Hubs;
-using Microsoft.AspNetCore.Cors.Infrastructure;
 using MediatR;
 
 namespace GlassZebra.WebUI
