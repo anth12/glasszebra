@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home" v-loading="isLoading">
     
     <div v-if="!isLoading">
     
@@ -9,9 +9,6 @@
       <GameManager v-if="hasActiveGame"/>
     </div>
 
-    <div class="loading-ui-block" v-if="isLoading">
-      Loading...
-    </div>
   </div>
 </template>
 
@@ -67,13 +64,5 @@ export default class Home extends Vue {
 </script>
 
 <style scoped>
-.loading-ui-block{
-  background:rgba(156, 94, 94, 0.2);
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 999;
-}
+
 </style>

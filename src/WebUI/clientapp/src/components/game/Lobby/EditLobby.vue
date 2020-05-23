@@ -4,33 +4,32 @@
       <div v-if="options && update">
 
         <h1>
-          <input type="text" v-model="update.name" />
+          <el-input placeholder="Game Name" v-model="update.name"></el-input>
         </h1>
         <Validation property="Name" />
 
-        <p>Categories: 
-            <button v-for="category in options.categories" :key="category.id">
-                <label>
-                    {{ category.name }}
-                    <input type="checkbox" :id="category.name" :value="category.id" v-model="update.categories">
-                </label>
-            </button>
+        <p>Categories:
+          <el-checkbox-group v-model="update.categories">
+            <el-checkbox v-for="category in options.categories" :label="category.id" :key="category.id">{{category.name}}</el-checkbox>
+          </el-checkbox-group>
         </p>
         <Validation property="Categories" />
         
-        <p>Difficulty: 
-            <button v-for="(id, name) in options.difficulty" v-bind:key="id">
-                <label>
-                    {{ name }}
-                    <input type="checkbox" v-bind:value="id" v-model="update.difficulty">
-                </label>
-            </button>
+        <p>Difficulty:
+          <el-checkbox-group v-model="update.difficulty">
+            <el-checkbox-button v-for="(id, name) in options.difficulty" :label="id" :key="id">{{name}}</el-checkbox-button>
+          </el-checkbox-group>
         </p>
         <Validation property="Difficulty" />
 
         <div>
             <label>Number of Rounds
-                <input name="update.numberOfRounds" type="range" min="1" v-bind:max="options.maxNumberOfRounds" v-model.number="update.numberOfRounds">
+              <el-slider
+                v-model="update.numberOfRounds"
+                v-bind:max="options.maxNumberOfRounds"
+                :step="1">
+              </el-slider>
+                
                 {{ update.numberOfRounds }}
             </label>
         </div>
@@ -38,7 +37,11 @@
 
         <div>
             <label>Questions Per Round
-                <input name="update.questionsPerRound" type="range" min="5" step="5" v-bind:max="options.maxQuestionsPerRound" v-model.number="update.questionsPerRound">
+              <el-slider
+                v-model="update.questionsPerRound"
+                v-bind:max="options.maxQuestionsPerRound"
+                :step="5">
+              </el-slider>
                 {{ update.questionsPerRound }}
             </label>
         </div> 

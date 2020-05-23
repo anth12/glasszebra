@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { Notification } from 'element-ui';
 import { GameDto, GamePlayerDto, ValidationException } from '../client/api'
 import { GameHub } from '../hubs/gameHub';
 
@@ -50,8 +51,14 @@ export default new Vuex.Store({
 
       if (existigPlayerIndex > -1)
         Object.assign(state.game.players[existigPlayerIndex], player);
-      else
+      else {
         state.game.players.push(player);
+        Notification.success({ 
+          title: "New player",
+          dangerouslyUseHTMLString: true,
+           message: `<strong>${player.name}</strong> has joined!`
+          });
+      }
     },
 
     addGameClientId(state, clientId: string) {
