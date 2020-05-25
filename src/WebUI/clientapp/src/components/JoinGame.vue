@@ -2,7 +2,13 @@
   <div>
     <label>
       Join Code
-      <input type="text" v-model="joinCode" />
+      <el-input
+        type="text"
+        placeholder="e.g. AC35"
+        v-model="joinCode"
+        minlength="4"
+        maxlength="10"
+        show-word-limit />
     </label>
     <button @click="onJoin">Join</button>
   </div>
@@ -11,7 +17,7 @@
 <script lang="ts">
 import store from "@/store";
 import { Component, Vue } from 'vue-property-decorator';
-import client from '../client/api-factory';
+import { gameClient } from '@/client/api-factory';
 
 @Component
 export default class JoinGame extends Vue {
@@ -19,12 +25,12 @@ export default class JoinGame extends Vue {
 
   onJoin(): void{
 
-    client.join(this.joinCode).then(response =>{
+    gameClient.join(this.joinCode).then(response =>{
       store.dispatch('addGameClientId', response.gameClientId);
       store.dispatch('addPlayerClientId', response.playerClientId);
       store.dispatch('addPlayerId', response.playerId);
       
-      client.get(response.gameClientId ?? '').then(game=>{
+      gameClient.get(response.gameClientId ?? '').then(game=>{
         store.dispatch('addGame', game);
       });
 

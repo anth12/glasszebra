@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { Notification } from 'element-ui';
-import { GameDto, GamePlayerDto, ValidationException } from '../client/api'
+import { GameDto, GamePlayerDto, ValidationException, GameStatus } from '../client/api'
 import { GameHub } from '../hubs/gameHub';
 
 Vue.use(Vuex)
@@ -42,6 +42,18 @@ export default new Vuex.Store({
       state.game = game;
     },
 
+    removePlayer(state, playerId: number) {
+
+      if (state.game?.players == null)
+        return;
+
+      const existigPlayerIndex = state.game.players.findIndex(p => p.id == playerId);
+
+      if (existigPlayerIndex > -1)
+        state.game.players.splice(existigPlayerIndex, 1);
+
+    },
+
     updatePlayer(state, player: GamePlayerDto){
       
       if (state.game?.players == null)
@@ -56,7 +68,8 @@ export default new Vuex.Store({
         Notification.success({ 
           title: "New player",
           dangerouslyUseHTMLString: true,
-           message: `<strong>${player.name}</strong> has joined!`
+          message: `<strong>${player.name}</strong> has joined!`,
+          position: 'bottom-right'
           });
       }
     },
@@ -76,12 +89,27 @@ export default new Vuex.Store({
   },
 
   getters: {
+    sortedPlayerList(state: StoreState) {
+      if (state.game?.status == GameStatus.Lobby)
+        return state.game?.players?.sort((a, b) => a.name?.localeCompare(b.name || '') || 0);
+      else
+        return state.game?.players?.sort((a, b) => (a.totalScore || 0) - (b.totalScore || 0));
+    },
+
     isGameOwner(state: StoreState){
       if(state.playerId == null || state.game == null || state.game.players == null) {
         return false;
       }
 
       return state.game.players.filter(p=> p.isOwner && p.id == state.playerId).length == 1;
+    },
+
+    currentPlayer(state: StoreState) {
+      if (state.playerId == null || state.game == null || state.game.players == null) {
+        return null;
+      }
+
+      return state.game.players.filter(p => p.id == state.playerId)[0] || null;
     },
 
     getValidationError: state => 
@@ -123,6 +151,15 @@ export default new Vuex.Store({
 
     updatePlayer(context, player: GamePlayerDto){
       context.commit('updatePlayer', player);
+    },
+
+    removePlayer(context, playerId: number) {
+      if(context.getters.currentPlayer.id == playerId) {
+        // Booted
+        context.dispatch('clear');
+      } else {
+        context.commit('removePlayer', playerId);
+      }
 
     },
 

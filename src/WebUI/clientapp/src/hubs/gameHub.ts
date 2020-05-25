@@ -40,7 +40,10 @@ export class GameHub {
         this.connection.on("PlayerUpdatedPublicEvent", (event: PlayerUpdatedPublicEvent) => {
             console.debug('[Event] playerUpdatedPublicEvent', event);
             
-            store.dispatch('updatePlayer', event.player);
+            if(event.player != null)
+                store.dispatch('updatePlayer', event.player);
+            else
+                store.dispatch('removePlayer', event.playerId)
         });
 
         this.connection.on("GameUpdatedPublicEvent", (event: GameUpdatedPublicEvent) => {

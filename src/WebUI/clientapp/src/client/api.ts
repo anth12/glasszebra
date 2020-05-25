@@ -317,6 +317,65 @@ export class GameClient implements IGameClient {
     }
 }
 
+export interface IPlayerClient {
+    remove(command: RemovePlayerCommand): Promise<void>;
+}
+
+export class PlayerClient implements IPlayerClient {
+    private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
+        this.http = http ? http : <any>window;
+        this.baseUrl = baseUrl ? baseUrl : "";
+    }
+
+    remove(command: RemovePlayerCommand): Promise<void> {
+        let url_ = this.baseUrl + "/api/Player";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(command);
+
+        let options_ = <RequestInit>{
+            body: content_,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processRemove(_response);
+        });
+    }
+
+    protected processRemove(response: Response): Promise<void> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 404) {
+            return response.text().then((_responseText) => {
+            let result404: any = null;
+            let resultData404 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result404 = NotFoundException.fromJS(resultData404);
+            return throwException("A server side error occurred.", status, _responseText, _headers, result404);
+            });
+        } else if (status === 400) {
+            return response.text().then((_responseText) => {
+            let result400: any = null;
+            let resultData400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result400 = ValidationException.fromJS(resultData400);
+            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<void>(<any>null);
+    }
+}
+
 export class CreateGameResponse implements ICreateGameResponse {
     gameClientId?: string;
     playerClientId?: string;
@@ -1084,6 +1143,39 @@ export interface IUpdateGameCommand extends IPlayerGameCommand {
     numberOfRounds?: number;
     difficulty?: Difficulty[] | undefined;
     categories?: number[] | undefined;
+}
+
+export class RemovePlayerCommand extends PlayerGameCommand implements IRemovePlayerCommand {
+    playerId?: number;
+
+    constructor(data?: IRemovePlayerCommand) {
+        super(data);
+    }
+
+    init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.playerId = _data["playerId"];
+        }
+    }
+
+    static fromJS(data: any): RemovePlayerCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new RemovePlayerCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["playerId"] = this.playerId;
+        super.toJSON(data);
+        return data; 
+    }
+}
+
+export interface IRemovePlayerCommand extends IPlayerGameCommand {
+    playerId?: number;
 }
 
 export class ApiException extends Error {

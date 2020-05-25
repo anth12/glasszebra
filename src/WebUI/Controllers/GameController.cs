@@ -42,7 +42,7 @@ namespace GlassZebra.WebUI.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, typeof(ValidationException))]
         public async Task<ActionResult<GameDto>> Get(Guid clientId)
         {
-            return await Mediator.Send(new GetGameQuery{ ClientId = clientId});
+            return await Mediator.Send(new GetGameQuery{ ClientId = clientId });
         }
 
         [HttpPost("[action]/{joinCode}")]

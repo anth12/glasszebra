@@ -30,6 +30,7 @@ namespace GlassZebra.Application.Game.Queries.GetGameOptions
 		public async Task<GetGameOptionsResponse> Handle(GetGameOptionsQuery request, CancellationToken cancellationToken)
 		{
 			var categories = await _context.Categories
+				.OrderBy(c=> c.Name)
 				.ProjectTo<QuestionCategoryDto>(_mapper.ConfigurationProvider)
 				.ToListAsync(cancellationToken);
 

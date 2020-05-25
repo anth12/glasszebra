@@ -1,8 +1,11 @@
 <template>
   <div>
-      <span class="status-connected" v-if="status == 1">
+      <span class="status-connected" >
           Connected
       </span>
+    <el-badge :value="2" class="item" type="warning" v-if="status == 1">
+        <el-button size="small">replies</el-button>
+    </el-badge>
       
       <span class="status-disconnected" v-if="status == 2">
           Disconnected

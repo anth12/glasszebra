@@ -2,8 +2,7 @@
   <div>
     <el-container>
       <el-main>
-            <Lobby v-if="game.status == 0" />
-      <!-- <el-row :gutter="10">
+      <el-row :gutter="10">
         <el-col :xs="14" :sm="14" :md="16" :lg="18" :xl="18">
           <div class="grid-content bg-purple">
             <Lobby v-if="game.status == 0" />
@@ -11,16 +10,13 @@
         </el-col>
         <el-col :xs="10" :sm="10" :md="8" :lg="6" :xl="6">
           <div class="grid-content bg-purple-light">
+            <PlayerList />
 
           </div>
         </el-col>
-      </el-row> -->
+      </el-row>
       </el-main>
-      <el-aside>
-        <PlayerList />
-      </el-aside>
     </el-container>
-    <button @click="exitGame">Exit</button>
 
     <!-- {{ game }} -->
     
@@ -33,7 +29,7 @@ import store from "@/store";
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import Lobby from '@/components/game/Lobby.vue'
 import PlayerList from '@/components/player/PlayerList.vue'
-import client from '../client/api-factory';
+import { gameClient } from '@/client/api-factory';
 import { PlayerGameCommand, GameDto } from '../client/api';
 
 
@@ -56,17 +52,6 @@ export default class GameManager extends Vue {
   //   }
   // }
 
-  exitGame(){
-    client.leave(new PlayerGameCommand({
-      gameClientId: store.state.gameClientId,
-      playerClientId: store.state.playerClientId,
-    })).then(()=>{
-      store.dispatch('clear');
-    }).catch(e=>{
-      console.error('Failed to leave game', e);
-    });
-    
-  }
 }
 </script>
 

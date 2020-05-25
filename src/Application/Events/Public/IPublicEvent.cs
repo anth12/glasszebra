@@ -1,7 +1,4 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using GlassZebra.Application.Common.Interfaces;
-using MediatR;
+﻿using MediatR;
 
 namespace GlassZebra.Application.Events.Public
 {

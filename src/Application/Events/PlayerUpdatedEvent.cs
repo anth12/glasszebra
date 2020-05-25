@@ -39,9 +39,9 @@ namespace GlassZebra.Application.Events
 		public Task Handle(PlayerUpdatedEvent notification, CancellationToken cancellationToken)
 		{
 			var player = _context.Players.Find(notification.PlayerId);
-			var playerDto = _mapper.Map<GamePlayerDto>(player);
+			var playerDto = player == null ? null : _mapper.Map<GamePlayerDto>(player);
 
-			var @event = new PlayerUpdatedPublicEvent(player.GameId, player.Id, playerDto);
+			var @event = new PlayerUpdatedPublicEvent(notification.GameId, notification.PlayerId, playerDto);
 			return _mediator.Publish(@event, cancellationToken);
 		}
 	}

@@ -283,6 +283,48 @@
           }
         }
       }
+    },
+    "/api/Player": {
+      "post": {
+        "tags": [
+          "Player"
+        ],
+        "operationId": "Player_Remove",
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemovePlayerCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundException"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationException"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -716,6 +758,23 @@
             "format": "guid"
           }
         }
+      },
+      "RemovePlayerCommand": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/PlayerGameCommand"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "playerId": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        ]
       }
     },
     "securitySchemes": {

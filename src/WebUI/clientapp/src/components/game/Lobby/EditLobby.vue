@@ -55,7 +55,7 @@
 <script lang="ts">
 import store from "@/store";
 import { IGetGameOptionsResponse, UpdateGameCommand, ValidationException, NotFoundException } from "@/client/api";
-import client from "@/client/api-factory";
+import { gameClient } from '@/client/api-factory';
 import Validation from "@/components/common/Validation.vue";
 import { Component, Vue, Watch, Prop } from 'vue-property-decorator';
 
@@ -95,7 +95,7 @@ export default class EditLobby extends Vue {
           
         if(this.update != null){
           console.log(this.update.questionsPerRound)
-            client.update(this.update).then(()=>{              
+            gameClient.update(this.update).then(()=>{              
               store.dispatch('addValidation', null);
             }).catch((e)=>{
               store.dispatch('addValidation', e);              
@@ -108,7 +108,7 @@ export default class EditLobby extends Vue {
 
     store.commit('isLoading', false);
 
-    client.options().then(response => {
+    gameClient.options().then(response => {
       this.options = response;
 
     }).catch(response=>{

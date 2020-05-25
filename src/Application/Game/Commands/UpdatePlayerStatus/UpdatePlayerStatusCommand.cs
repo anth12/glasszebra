@@ -40,7 +40,12 @@ namespace GlassZebra.Application.Game.Commands.UpdatePlayerStatus
 
 			if(player.Status == request.NewStatus)
 				return Unit.Value;
-			
+
+			if (request.NewStatus == PlayerStatus.Left)
+			{
+				// TODO
+			}
+
 			player.Status = request.NewStatus;
 
 			await _context.SaveChangesAsync(cancellationToken);
