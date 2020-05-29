@@ -16,6 +16,7 @@ using System.Linq;
 using System.Reflection;
 using GlassZebra.WebUI.Hubs;
 using MediatR;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
 
 namespace GlassZebra.WebUI
 {
@@ -57,7 +58,7 @@ namespace GlassZebra.WebUI
 	            cors.AddPolicy("AllowMyOrigin",
 		            builder => builder
 			            //.AllowAnyOrigin()
-                        .WithOrigins("http://localhost:8080")
+                        .WithOrigins("http://localhost:8080", "https://glasszebra.netlify.app")
                         .AllowAnyMethod()
 			            .AllowAnyHeader()
 			            .AllowCredentials()
@@ -70,11 +71,11 @@ namespace GlassZebra.WebUI
                 options.SuppressModelStateInvalidFilter = true;
             });
 
-            // In production, the Angular files will be served from this directory
-            //services.AddSpaStaticFiles(configuration =>
-            //{
-            //    configuration.RootPath = "ClientApp/dist";
-            //});
+            // In production, the Vue files will be served from this directory
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "ClientApp/dist";
+            });
 
             services.AddOpenApiDocument(configure =>
             {
@@ -143,16 +144,16 @@ namespace GlassZebra.WebUI
                     
                 });
             });
+            
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "ClientApp";
 
-            //app.UseSpa(spa =>
-            //{
-	           // spa.Options.SourcePath = "ClientApp";
-
-            //    if (env.IsDevelopment())
-            //    {
-	           //     //spa.UseVueDevelopmentServer();
-            //    }
-            //});
+                if (env.IsDevelopment())
+                {
+	                spa.Options.SourcePath = "ClientApp";
+                }
+            });
         }
     }
 }

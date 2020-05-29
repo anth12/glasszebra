@@ -20,6 +20,7 @@ namespace GlassZebra.Application
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
 
             services.AddTransient<IGameCodeService, GameCodeService>();
+            services.AddTransient<IQuestionService, QuestionService>();
             services.AddSingleton<IRandomNameService, RandomNameService>();
 
             return services;

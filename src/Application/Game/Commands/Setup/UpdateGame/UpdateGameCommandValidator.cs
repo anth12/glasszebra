@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace GlassZebra.Application.Game.Commands.UpdateGame
+namespace GlassZebra.Application.Game.Commands.Setup.UpdateGame
 {
 	public class UpdateGameCommandValidator : AbstractValidator<UpdateGameCommand>
 	{

@@ -2,6 +2,8 @@
 {
 	public enum QuestionType
 	{
+		All = SingleChoiceQuestion | MultipleChoiceQuestion | FreeTextQuestion | SingleChoiceBuzzInQuestion | FreeTextDoodle,
+		
 		/// <summary>
 		/// Standard single correct answer, players answer independently
 		/// </summary>
@@ -20,7 +22,7 @@
 		/// <summary>
 		/// Single correct answer, First player to buzz answers
 		/// </summary>
-		SingleChoiceBuzzInQuestion = 1<<3 | SingleChoiceQuestion,
+		SingleChoiceBuzzInQuestion = 1<<3,
 
 		/// <summary>
 		/// Doodle (drawing) with no options, players must type answer

@@ -660,14 +660,16 @@
           "MultipleChoiceQuestion",
           "FreeTextQuestion",
           "SingleChoiceBuzzInQuestion",
-          "FreeTextDoodle"
+          "FreeTextDoodle",
+          "All"
         ],
         "enum": [
           1,
           2,
           4,
-          9,
-          16
+          8,
+          16,
+          31
         ]
       },
       "Difficulty": {

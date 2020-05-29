@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GlassZebra.Application.Game.Commands.JoinGame
+namespace GlassZebra.Application.Game.Commands.Setup.JoinGame
 {
 	public class JoinGameResponse
 	{

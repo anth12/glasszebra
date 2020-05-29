@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import { Notification } from 'element-ui';
 import { GameDto, GamePlayerDto, ValidationException, GameStatus } from '../client/api'
 import { GameHub } from '../hubs/gameHub';
+import { gameClient } from '@/client/api-factory';
 
 Vue.use(Vuex)
 
@@ -145,6 +146,25 @@ export default new Vuex.Store({
       }
     },
 
+    loadGame(context){
+      gameClient.get(context.state.gameClientId).then(game => {
+
+        const playerExists = game.players?.some(p => p.id == context.state.playerId);
+
+        if (playerExists)
+          context.dispatch('addGame', game);
+        else
+          context.dispatch('clear');
+
+      }).catch(response => {
+        console.error('Failed to load existing game');
+        console.error(response);
+
+      }).then(() => {
+        context.commit('isLoading', false);
+      });
+    },
+    
     updateGame(context, game: GameDto) {
       context.commit('addGame', game);
     },

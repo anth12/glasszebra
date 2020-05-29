@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using GlassZebra.Application.Common.Exceptions;
-using GlassZebra.Application.Game.Commands.RemovePlayer;
+using GlassZebra.Application.Game.Commands.Setup.RemovePlayer;
 using NSwag.Annotations;
 
 namespace GlassZebra.WebUI.Controllers

@@ -30,5 +30,7 @@ namespace GlassZebra.Domain.Entities
 		public int TotalScore { get; set; }
 
 		public int RoundScore { get; set; }
+
+		public GamePlayerAnswer CurrentAnswer { get; set; }
 	}
 }

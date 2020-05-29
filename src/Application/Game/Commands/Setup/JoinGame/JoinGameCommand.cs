@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using GlassZebra.Application.Common.Exceptions;
@@ -9,7 +10,7 @@ using GlassZebra.Domain.Entities;
 using GlassZebra.Domain.Enums;
 using MediatR;
 
-namespace GlassZebra.Application.Game.Commands.JoinGame
+namespace GlassZebra.Application.Game.Commands.Setup.JoinGame
 {
 	public class JoinGameCommand : IRequest<JoinGameResponse>
 	{
@@ -31,7 +32,7 @@ namespace GlassZebra.Application.Game.Commands.JoinGame
 
 		public async Task<JoinGameResponse> Handle(JoinGameCommand request, CancellationToken cancellationToken)
 		{
-			var game = _context.Games.First(g => g.JoinCode == request.JoinCode);
+			var game = _context.Games.First(g => g.JoinCode.Equals(request.JoinCode, StringComparison.InvariantCultureIgnoreCase));
 			
 			if (game.Status != GameStatus.Lobby)
 				throw new InvalidStatusException(game.Status);

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GlassZebra.Application.Game.Commands.CreateGame
+namespace GlassZebra.Application.Game.Commands.Setup.CreateGame
 {
 	public class CreateGameResponse
 	{

@@ -10,7 +10,7 @@
         maxlength="10"
         show-word-limit />
     </label>
-    <button @click="onJoin">Join</button>
+    <el-button type="success" @click="onJoin">Join</el-button>
   </div>
 </template>
 

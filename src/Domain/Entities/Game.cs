@@ -25,6 +25,7 @@ namespace GlassZebra.Domain.Entities
 
 		public GameRound CurrentRound { get; set; }
 
+		public QuestionType QuestionTypes { get; set; }
 		public int QuestionsPerRound { get; set; }
 		public int NumberOfRounds { get; set; }
 

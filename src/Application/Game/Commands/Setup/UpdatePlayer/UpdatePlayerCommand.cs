@@ -6,7 +6,7 @@ using GlassZebra.Application.Common.Interfaces;
 using GlassZebra.Application.Events;
 using MediatR;
 
-namespace GlassZebra.Application.Game.Commands.UpdatePlayer
+namespace GlassZebra.Application.Game.Commands.Setup.UpdatePlayer
 {
 	public class UpdatePlayerCommand : IRequest
 	{

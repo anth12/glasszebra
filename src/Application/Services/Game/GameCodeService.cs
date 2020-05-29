@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Threading.Tasks;
 using GlassZebra.Application.Common.Interfaces;
 using GlassZebra.Domain.Enums;
@@ -31,9 +32,26 @@ namespace GlassZebra.Application.Services.Game
 			}
 		}
 
+		private static readonly Random Random = new Random();
+
+		/// <summary>
+		/// Skip I & O
+		/// </summary>
+		private static readonly char[] ValidAlphabeticalCharacters = "ABCDEFGHJKLMNPQRSTUVWXYZ".ToCharArray();
+		private static readonly char[] ValidNumericCharacters = "012346789".ToCharArray();
+
 		public string CreateCode(int length)
 		{
-			return Guid.NewGuid().ToString("N").Substring(0, length);
+			var result = new StringBuilder(length);
+			for (var i = 0; i < length; i++)
+			{
+				result.Append(i % 2 == 0
+					? ValidAlphabeticalCharacters[Random.Next(0, ValidAlphabeticalCharacters.Length - 1)]
+					: ValidNumericCharacters[Random.Next(0, ValidNumericCharacters.Length - 1)]
+				);
+			}
+
+			return result.ToString();
 		}
 	}
 }

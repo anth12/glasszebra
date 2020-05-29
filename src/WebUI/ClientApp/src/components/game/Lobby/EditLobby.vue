@@ -23,30 +23,29 @@
         <Validation property="Difficulty" />
 
         <div>
-            <label>Number of Rounds
+            <label>Number of Rounds: {{ update.numberOfRounds }}
               <el-slider
                 v-model="update.numberOfRounds"
                 v-bind:max="options.maxNumberOfRounds"
                 :step="1">
-              </el-slider>
-                
-                {{ update.numberOfRounds }}
+              </el-slider>                
             </label>
         </div>
         <Validation property="NumberOfRounds" />
 
         <div>
-            <label>Questions Per Round
+            <label>Questions Per Round: {{ update.questionsPerRound }}
               <el-slider
                 v-model="update.questionsPerRound"
                 v-bind:max="options.maxQuestionsPerRound"
                 :step="5">
               </el-slider>
-                {{ update.questionsPerRound }}
             </label>
         </div> 
         <Validation property="QuestionsPerRound" />
 
+        <el-button :disabled="!canStartGame" @click="startGame">Start Game</el-button>
+        
       </div>
 
   </div>
@@ -85,6 +84,10 @@ export default class EditLobby extends Vue {
       return store.state.game;
   }
 
+  get canStartGame() {
+    return store.state.game?.players != undefined && store.state.game.players?.length > 1 || false;
+  }
+
   @Watch('update', { deep: true })
   onPropertyChanged() {
       
@@ -121,6 +124,9 @@ export default class EditLobby extends Vue {
     
   }
 
+  startGame(){
+    alert('starting')
+  }
 }
 </script>
 

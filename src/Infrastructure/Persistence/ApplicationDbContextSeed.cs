@@ -37,7 +37,7 @@ namespace GlassZebra.Infrastructure.Persistence
         {
 	        context.Categories.Add(new QuestionCategory { Name = "Animals"});
 	        context.Categories.Add(new QuestionCategory { Name = "Geography" });
-	        context.Categories.Add(new QuestionCategory { Name = "General Knowledge" });
+	        context.Categories.Add(new QuestionCategory { Name = "General Knowledge", IsDefault = true});
 	        context.Categories.Add(new QuestionCategory { Name = "Movies" });
 	        context.Categories.Add(new QuestionCategory { Name = "TV Shows" });
 	        context.Categories.Add(new QuestionCategory { Name = "Characters" });

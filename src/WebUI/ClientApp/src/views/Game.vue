@@ -23,7 +23,7 @@ import GameManager from '@/components/GameManager.vue'
 import { gameClient } from '@/client/api-factory';
 
 @Component({
-  name: 'Home',
+  name: 'Game',
   components: {
     JoinGame,
     CreateGame,
@@ -49,7 +49,22 @@ export default class Home extends Vue {
     } else{
       console.log(`Loading existing game ${store.state.gameClientId}`);
 
-      store.dispatch('loadGame');
+      gameClient.get(store.state.gameClientId).then(game=>{
+        
+        const playerExists = game.players?.some(p=> p.id == store.state.playerId);
+
+        if(playerExists)
+          store.dispatch('addGame', game);
+        else
+          store.dispatch('clear');
+
+      }).catch(response=>{
+        console.error('Failed to load existing game');
+        console.error(response);
+
+      }).then(()=>{
+        store.commit('isLoading', false);
+      });
     }
   }
 }

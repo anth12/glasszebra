@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using GlassZebra.Application.Common.Interfaces;
 using GlassZebra.Application.Services.Game;
@@ -6,7 +7,7 @@ using GlassZebra.Domain.Entities;
 using GlassZebra.Domain.Enums;
 using MediatR;
 
-namespace GlassZebra.Application.Game.Commands.CreateGame
+namespace GlassZebra.Application.Game.Commands.Setup.CreateGame
 {
 	public class CreateGameCommand : IRequest<CreateGameResponse>
 	{
@@ -41,14 +42,15 @@ namespace GlassZebra.Application.Game.Commands.CreateGame
 				Status = GameStatus.Lobby,
 				QuestionsPerRound = 20,
 				NumberOfRounds = 5,
-				Difficulty = Difficulty.Easy | Difficulty.Average | Difficulty.Hard
+				QuestionTypes = QuestionType.All,
+				Difficulty = Difficulty.Easy | Difficulty.Average | Difficulty.Hard,
+				Categories = _context.Categories.Where(c=> c.IsDefault).ToList()
 			};
 
 			game.Players.Add(owner);
 			
 			_context.Games.Add(game);
 			await _context.SaveChangesAsync(cancellationToken);
-
 			
 			return new CreateGameResponse
 			{

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button @click="triggerCreateGame">Create game</button>
+    <el-button type="primary" @click="triggerCreateGame">Create game</el-button>
   </div>
 </template>
 

@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using GlassZebra.Application.Common.Exceptions;
 using GlassZebra.Application.Common.Extensions;
@@ -7,9 +6,7 @@ using GlassZebra.Application.Common.Interfaces;
 using GlassZebra.Application.Events;
 using GlassZebra.Domain.Enums;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-
-namespace GlassZebra.Application.Game.Commands.UpdatePlayerStatus
+namespace GlassZebra.Application.Game.Commands.Setup.UpdatePlayerStatus
 {
 	public class UpdatePlayerStatusCommand : PlayerGameCommand, IRequest
 	{
@@ -29,11 +26,8 @@ namespace GlassZebra.Application.Game.Commands.UpdatePlayerStatus
 
 		public async Task<Unit> Handle(UpdatePlayerStatusCommand request, CancellationToken cancellationToken)
 		{
-			var game = await _context.Games
-				.Include(g=> g.Players)
-				.FindByClientIdAsync(request.GameClientId);
-
-			var player = game.Players.FirstOrDefault(p => p.ClientId == request.PlayerClientId);
+			var player = await _context.Players
+				.FindByClientIdAsync(request.PlayerClientId);
 
 			if(player == null)
 				throw new NotFoundException("Player", request.PlayerClientId);

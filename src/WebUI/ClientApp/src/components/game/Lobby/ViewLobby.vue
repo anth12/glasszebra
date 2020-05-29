@@ -1,27 +1,23 @@
 <template>
   <div>
       
-      <h1>{{game.name}}</h1>
-      <ul>
-        
-      </ul>
+    <h1>{{game.name}}</h1>
+
+    <h4>Waiting for game to start... <span v-loading="true"></span></h4>
 
     <h3>Categories: </h3>
-    <p>
-      <button v-for="category in game.categories" :key="category.id">
-        {{category.name }}
-      </button>
-     </p>
+    <el-tag v-for="category in game.categories" :key="category.id">
+      {{category.name }}
+    </el-tag>
 
     <h3>Difficulty: </h3>
-    <p>
-      <button v-for="difficulty in game.difficulty" :key="difficulty">
-        <Difficulty v-bind:value="difficulty" />
-      </button>
-     </p>   
-      <p>numberOfRounds: {{ game.numberOfRounds }}</p>
-      <p>questionsPerRound: {{ game.questionsPerRound }}</p>
-
+    <el-tag v-for="difficulty in game.difficulty" :key="difficulty">
+      <Difficulty v-bind:value="difficulty" />
+    </el-tag>
+        
+    <h3>Number Of Rounds: <strong>{{ game.numberOfRounds }}</strong></h3>
+    <h3>Questions Per Round: <strong>{{ game.questionsPerRound }}</strong></h3>
+    
   </div>
 </template>
 

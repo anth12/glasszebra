@@ -6,6 +6,9 @@
         <el-col :xs="14" :sm="14" :md="16" :lg="18" :xl="18">
           <div class="grid-content bg-purple">
             <Lobby v-if="game.status == 0" />
+            
+            <Lobby v-if="game.status == 1" />
+
           </div>
         </el-col>
         <el-col :xs="10" :sm="10" :md="8" :lg="6" :xl="6">

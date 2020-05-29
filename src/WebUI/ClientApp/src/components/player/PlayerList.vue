@@ -2,6 +2,10 @@
   <div>
       
     <el-card class="box-card" id="playerList">
+        <div slot="header" class="clearfix" v-if="game.status == 0">
+          <Share />
+        </div>
+
         <div v-for="player in players" :key="player.id" el-badge is-dot class="item" v-bind:type="statusType(player.status)">
             <el-badge is-dot class="item" v-bind:type="statusType(player.status)" v-bind:title="statusName(player.status)">
                 {{player.name}}
@@ -40,16 +44,23 @@
 <script lang="ts">
 import store from "@/store";
 import { PlayerStatus, GamePlayerDto, RemovePlayerCommand, PlayerGameCommand } from "@/client/api";
+import Share from "@/components/common/Share.vue";
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import { playerClient, gameClient } from '@/client/api-factory';
 import { Message } from 'element-ui';
 
+
 @Component({
   components:{
+    Share
   }
 })
 export default class PlayerList extends Vue {
-    
+  
+  get game() {
+      return store.state.game;
+  }
+
   get players() {
       return store.getters.sortedPlayerList;
   }
@@ -80,6 +91,7 @@ export default class PlayerList extends Vue {
       Message.error('Something went wrong while leaving')
     });
   }
+
 
     statusType(status: PlayerStatus) {
         switch(status){

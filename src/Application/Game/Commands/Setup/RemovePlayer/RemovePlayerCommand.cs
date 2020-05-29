@@ -7,11 +7,10 @@ using GlassZebra.Application.Common.Extensions;
 using GlassZebra.Application.Common.Interfaces;
 using GlassZebra.Application.Events;
 using GlassZebra.Domain.Entities;
-using GlassZebra.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace GlassZebra.Application.Game.Commands.RemovePlayer
+namespace GlassZebra.Application.Game.Commands.Setup.RemovePlayer
 {
 	public class RemovePlayerCommand : PlayerGameCommand, IRequest
 	{
@@ -31,15 +30,10 @@ namespace GlassZebra.Application.Game.Commands.RemovePlayer
 
 		public async Task<Unit> Handle(RemovePlayerCommand request, CancellationToken cancellationToken)
 		{
-			var game = await _context.Games
-				.Include(g=> g.Players)
-				.Include(g=> g.Categories)
-				.FindByClientIdAsync(request.GameClientId);
-
-			var owner = game.Players.FirstOrDefault(p => p.ClientId == request.PlayerClientId);
-
-			if(owner == null || !owner.IsOwner)
-				throw new UnauthorizedUpdateException(game.Id, request.PlayerClientId);
+			var (game, _) = await _context.Games
+				.Include(g => g.Players)
+				.Include(g => g.Categories)
+				.FindByClientIdAsync(request.GameClientId, request.PlayerClientId, mustBeOwner: true);
 
 			var player = game.Players.FirstOrDefault(p => p.Id == request.PlayerId);
 
@@ -47,7 +41,6 @@ namespace GlassZebra.Application.Game.Commands.RemovePlayer
 				throw new NotFoundException(nameof(GamePlayer), request.PlayerId);
 
 			_context.Players.Remove(player);
-			//game.Players.Remove(player); // TODO 
 
 			await _context.SaveChangesAsync(cancellationToken);
 

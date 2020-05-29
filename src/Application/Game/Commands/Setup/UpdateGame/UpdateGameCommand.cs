@@ -10,7 +10,7 @@ using GlassZebra.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace GlassZebra.Application.Game.Commands.UpdateGame
+namespace GlassZebra.Application.Game.Commands.Setup.UpdateGame
 {
 	public class UpdateGameCommand : PlayerGameCommand, IRequest
 	{
@@ -36,16 +36,11 @@ namespace GlassZebra.Application.Game.Commands.UpdateGame
 
 		public async Task<Unit> Handle(UpdateGameCommand request, CancellationToken cancellationToken)
 		{
-			var game = await _context.Games
+			var (game, _) = await _context.Games
 				.Include(g=> g.Players)
 				.Include(g=> g.Categories)
-				.FindByClientIdAsync(request.GameClientId);
-
-			var player = game.Players.FirstOrDefault(p => p.ClientId == request.PlayerClientId);
-
-			if(player == null || !player.IsOwner)
-				throw new UnauthorizedUpdateException(game.Id, request.PlayerClientId);
-
+				.FindByClientIdAsync(request.GameClientId, request.PlayerClientId, mustBeOwner: true);
+			
 			game.Name = request.Name;
 			game.QuestionsPerRound = request.QuestionsPerRound;
 			game.NumberOfRounds = request.NumberOfRounds;

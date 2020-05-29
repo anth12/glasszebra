@@ -985,8 +985,9 @@ export enum QuestionType {
     SingleChoiceQuestion = 1,
     MultipleChoiceQuestion = 2,
     FreeTextQuestion = 4,
-    SingleChoiceBuzzInQuestion = 9,
+    SingleChoiceBuzzInQuestion = 8,
     FreeTextDoodle = 16,
+    All = 31,
 }
 
 export enum Difficulty {

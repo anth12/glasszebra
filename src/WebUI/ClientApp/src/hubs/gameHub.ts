@@ -6,15 +6,13 @@ import { GameUpdatedPublicEvent, PlayerUpdatedPublicEvent } from './eventModels'
 export class GameHub {
     connection: signalR.HubConnection;
 
-    constructor(host = "https://localhost:44312") {
+    constructor(host = process.env.VUE_APP_API_BASEURL) {
         this.connection = new signalR.HubConnectionBuilder()
             .withUrl(`${host}/gamehub`)
             .build();
     }
 
     connect(){
-
-        console.log('connecting');
         
         this.connection.start()
         .then(()=>{
@@ -27,11 +25,6 @@ export class GameHub {
             });
         })
         .catch(err => console.log(err));
-
-        this.connection.on("receiveMessage", (game: GameDto) => {
-            console.debug('receeive');
-            console.log(game);
-        });
 
         this.connection.on("Notification", (type: string, message: string) => {
             alert(`[${type}] ${message}`);

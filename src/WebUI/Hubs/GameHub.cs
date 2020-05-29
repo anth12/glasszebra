@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using GlassZebra.Application.Game.Commands.UpdatePlayerStatus;
+using GlassZebra.Application.Game.Commands.Setup.UpdatePlayerStatus;
 using GlassZebra.Application.Game.Dtos;
 using GlassZebra.Application.Game.Queries.GetGame;
 using GlassZebra.Domain.Enums;

@@ -5,7 +5,7 @@ using GlassZebra.Application.Common.Interfaces;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
-namespace GlassZebra.Application.Game.Commands.UpdatePlayer
+namespace GlassZebra.Application.Game.Commands.Setup.UpdatePlayer
 {
 	public class UpdatePlayerCommandValidator : AbstractValidator<UpdatePlayerCommand>
 	{
