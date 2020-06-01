@@ -40,6 +40,7 @@ export default class CreateGame extends Vue {
       
       gameClient.get(response.gameClientId ?? '').then(game=>{
         store.dispatch('addGame', game);
+        this.$router.push(game.joinCode)
       });
 
     }).catch((e)=>{

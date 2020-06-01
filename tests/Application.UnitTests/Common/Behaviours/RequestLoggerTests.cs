@@ -5,7 +5,7 @@ using Moq;
 using NUnit.Framework;
 using System.Threading;
 using System.Threading.Tasks;
-using GlassZebra.Application.Game.Commands.CreateGame;
+using GlassZebra.Application.Game.Commands.Setup.CreateGame;
 
 namespace GlassZebra.Application.UnitTests.Common.Behaviours
 {

@@ -14,7 +14,7 @@
       "requireParametersWithoutDefault": true,
       "apiGroupNames": null,
       "defaultPropertyNameHandling": "CamelCase",
-      "defaultReferenceTypeNullHandling": "Null",
+      "defaultReferenceTypeNullHandling": "NotNull",
       "defaultDictionaryValueReferenceTypeNullHandling": "NotNull",
       "defaultResponseReferenceTypeNullHandling": "NotNull",
       "defaultEnumHandling": "Integer",

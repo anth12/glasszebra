@@ -645,8 +645,8 @@ export interface IGetGameOptionsResponse {
 }
 
 export class QuestionCategoryDto implements IQuestionCategoryDto {
-    id?: number;
-    name?: string | undefined;
+    id!: number;
+    name!: string;
 
     constructor(data?: IQuestionCategoryDto) {
         if (data) {
@@ -680,19 +680,19 @@ export class QuestionCategoryDto implements IQuestionCategoryDto {
 }
 
 export interface IQuestionCategoryDto {
-    id?: number;
-    name?: string | undefined;
+    id: number;
+    name: string;
 }
 
 export class GameDto implements IGameDto {
-    id?: number;
-    joinCode?: string | undefined;
-    name?: string | undefined;
-    status?: GameStatus;
-    players?: GamePlayerDto[] | undefined;
+    id!: number;
+    joinCode!: string;
+    name!: string;
+    status!: GameStatus;
+    players!: GamePlayerDto[];
     currentRound?: GameRoundDto | undefined;
-    questionsPerRound?: number;
-    numberOfRounds?: number;
+    questionsPerRound!: number;
+    numberOfRounds!: number;
     difficulty?: Difficulty[] | undefined;
     categories?: QuestionCategoryDto[] | undefined;
 
@@ -702,6 +702,9 @@ export class GameDto implements IGameDto {
                 if (data.hasOwnProperty(property))
                     (<any>this)[property] = (<any>data)[property];
             }
+        }
+        if (!data) {
+            this.players = [];
         }
     }
 
@@ -768,14 +771,14 @@ export class GameDto implements IGameDto {
 }
 
 export interface IGameDto {
-    id?: number;
-    joinCode?: string | undefined;
-    name?: string | undefined;
-    status?: GameStatus;
-    players?: GamePlayerDto[] | undefined;
+    id: number;
+    joinCode: string;
+    name: string;
+    status: GameStatus;
+    players: GamePlayerDto[];
     currentRound?: GameRoundDto | undefined;
-    questionsPerRound?: number;
-    numberOfRounds?: number;
+    questionsPerRound: number;
+    numberOfRounds: number;
     difficulty?: Difficulty[] | undefined;
     categories?: QuestionCategoryDto[] | undefined;
 }
@@ -787,9 +790,9 @@ export enum GameStatus {
 }
 
 export class GamePlayerDto implements IGamePlayerDto {
-    id?: number;
-    name?: string | undefined;
-    status?: PlayerStatus;
+    id!: number;
+    name!: string;
+    status!: PlayerStatus;
     isOwner?: boolean;
     image?: string | undefined;
     totalScore?: number;
@@ -837,9 +840,9 @@ export class GamePlayerDto implements IGamePlayerDto {
 }
 
 export interface IGamePlayerDto {
-    id?: number;
-    name?: string | undefined;
-    status?: PlayerStatus;
+    id: number;
+    name: string;
+    status: PlayerStatus;
     isOwner?: boolean;
     image?: string | undefined;
     totalScore?: number;
@@ -853,8 +856,8 @@ export enum PlayerStatus {
 }
 
 export class GameRoundDto implements IGameRoundDto {
-    id?: number;
-    type?: GameType;
+    id!: number;
+    type!: GameType;
     currentQuestion?: QuestionDto | undefined;
     currentQuestionTimeUtc?: Date;
     currentQuestionIndex?: number;
@@ -897,8 +900,8 @@ export class GameRoundDto implements IGameRoundDto {
 }
 
 export interface IGameRoundDto {
-    id?: number;
-    type?: GameType;
+    id: number;
+    type: GameType;
     currentQuestion?: QuestionDto | undefined;
     currentQuestionTimeUtc?: Date;
     currentQuestionIndex?: number;
@@ -910,10 +913,10 @@ export enum GameType {
 }
 
 export class QuestionDto implements IQuestionDto {
-    id?: number;
-    question?: string | undefined;
-    type?: QuestionType;
-    difficulty?: Difficulty;
+    id!: number;
+    question!: string;
+    type!: QuestionType;
+    difficulty!: Difficulty;
     categories?: QuestionCategoryDto[] | undefined;
     answers?: string[] | undefined;
 
@@ -973,10 +976,10 @@ export class QuestionDto implements IQuestionDto {
 }
 
 export interface IQuestionDto {
-    id?: number;
-    question?: string | undefined;
-    type?: QuestionType;
-    difficulty?: Difficulty;
+    id: number;
+    question: string;
+    type: QuestionType;
+    difficulty: Difficulty;
     categories?: QuestionCategoryDto[] | undefined;
     answers?: string[] | undefined;
 }

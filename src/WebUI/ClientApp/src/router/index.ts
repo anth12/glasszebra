@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import Home from '../views/Home.vue'
+import Game from '../views/Game.vue'
 
 import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
@@ -17,6 +18,11 @@ Vue.use(VueRouter)
     name: 'Home',
     component: Home
     }, 
+    {
+      path: '/:joinCode',
+      name: 'Game',
+      component: Game
+    },
     {
       path: '/about',
       name: 'About',

@@ -448,6 +448,10 @@
       "QuestionCategoryDto": {
         "type": "object",
         "additionalProperties": false,
+        "required": [
+          "id",
+          "name"
+        ],
         "properties": {
           "id": {
             "type": "integer",
@@ -455,13 +459,22 @@
           },
           "name": {
             "type": "string",
-            "nullable": true
+            "minLength": 1
           }
         }
       },
       "GameDto": {
         "type": "object",
         "additionalProperties": false,
+        "required": [
+          "id",
+          "joinCode",
+          "name",
+          "status",
+          "players",
+          "questionsPerRound",
+          "numberOfRounds"
+        ],
         "properties": {
           "id": {
             "type": "integer",
@@ -469,18 +482,17 @@
           },
           "joinCode": {
             "type": "string",
-            "nullable": true
+            "minLength": 1
           },
           "name": {
             "type": "string",
-            "nullable": true
+            "minLength": 1
           },
           "status": {
             "$ref": "#/components/schemas/GameStatus"
           },
           "players": {
             "type": "array",
-            "nullable": true,
             "items": {
               "$ref": "#/components/schemas/GamePlayerDto"
             }
@@ -534,6 +546,11 @@
       "GamePlayerDto": {
         "type": "object",
         "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "status"
+        ],
         "properties": {
           "id": {
             "type": "integer",
@@ -541,7 +558,7 @@
           },
           "name": {
             "type": "string",
-            "nullable": true
+            "minLength": 1
           },
           "status": {
             "$ref": "#/components/schemas/PlayerStatus"
@@ -580,6 +597,10 @@
       "GameRoundDto": {
         "type": "object",
         "additionalProperties": false,
+        "required": [
+          "id",
+          "type"
+        ],
         "properties": {
           "id": {
             "type": "integer",
@@ -621,6 +642,12 @@
       "QuestionDto": {
         "type": "object",
         "additionalProperties": false,
+        "required": [
+          "id",
+          "question",
+          "type",
+          "difficulty"
+        ],
         "properties": {
           "id": {
             "type": "integer",
@@ -628,7 +655,7 @@
           },
           "question": {
             "type": "string",
-            "nullable": true
+            "minLength": 1
           },
           "type": {
             "$ref": "#/components/schemas/QuestionType"

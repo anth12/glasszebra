@@ -21,6 +21,7 @@ import JoinGame from '@/components/JoinGame.vue'
 import CreateGame from '@/components/CreateGame.vue'
 import GameManager from '@/components/GameManager.vue'
 import { gameClient } from '@/client/api-factory';
+import { gameService } from '@/services/gameService';
 
 @Component({
   name: 'Home',
@@ -43,14 +44,12 @@ export default class Home extends Vue {
   mounted() {
 
     // Load existing game
-    if(store.state.gameClientId == null) {
+    gameService.loadGame().then(game=>{
+      console.log(`Game loaded, redirecting...`);
+      this.$router.push({ name: 'Game', params: { joinCode: game.joinCode } })
+    }).catch((err)=>{
       store.commit('isLoading', false);
-      
-    } else{
-      console.log(`Loading existing game ${store.state.gameClientId}`);
-
-      store.dispatch('loadGame');
-    }
+    });
   }
 }
 </script>

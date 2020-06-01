@@ -1,11 +1,8 @@
 <template>
-  <div class="home" v-loading="isLoading">
+  <div class="game" v-loading="isLoading">
     
     <div v-if="!isLoading">
     
-      <JoinGame v-if="!hasActiveGame" />
-      <CreateGame v-if="!hasActiveGame" />
-
       <GameManager v-if="hasActiveGame"/>
 
     </div>
@@ -21,6 +18,7 @@ import JoinGame from '@/components/JoinGame.vue'
 import CreateGame from '@/components/CreateGame.vue'
 import GameManager from '@/components/GameManager.vue'
 import { gameClient } from '@/client/api-factory';
+import { gameService } from '@/services/gameService';
 
 @Component({
   name: 'Game',
@@ -41,26 +39,16 @@ export default class Home extends Vue {
   }
 
   mounted() {
-
+    
     // Load existing game
     if(store.state.gameClientId == null) {
-      store.commit('isLoading', false);
-      
+      this.$router.push("Home");      
     } else{
       console.log(`Loading existing game ${store.state.gameClientId}`);
 
-      gameClient.get(store.state.gameClientId).then(game=>{
-        
-        const playerExists = game.players?.some(p=> p.id == store.state.playerId);
-
-        if(playerExists)
-          store.dispatch('addGame', game);
-        else
-          store.dispatch('clear');
-
-      }).catch(response=>{
-        console.error('Failed to load existing game');
-        console.error(response);
+      gameService.loadGame().catch(err=>{
+        console.error('Failed to load existing game. Returning home');
+        this.$router.push({ name: "Home" }); 
 
       }).then(()=>{
         store.commit('isLoading', false);
